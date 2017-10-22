@@ -11,7 +11,10 @@ public class AdministratorImpl
 	implements User, Administrator
 			
 {
-	
+	public AdministratorImpl()
+	{
+		super();
+	}
 
 	@Override
 	public String getFirstName() {
