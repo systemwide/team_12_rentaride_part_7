@@ -19,6 +19,15 @@ public class RentalLocationImpl
 		this.address = 	null;
 		this.capacity =	-1;
 	}
+	
+	public RentalLocationImpl(long id, String name, String address, int capacity)
+	{
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.capacity = capacity;
+		
+	}
 	@Override
 	public long getId() {
 
