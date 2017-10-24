@@ -20,55 +20,55 @@ public class RentalLocationImpl
 	}
 	@Override
 	public long getId() {
-		// TODO Auto-generated method stub
+
 		return id;
 	}
 
 	@Override
 	public void setId(long id) {
-		// TODO Auto-generated method stub
+
 		this.id = id;
 	}
 
 	@Override
 	public boolean isPersistent() {
-		// TODO Auto-generated method stub
+
 		return id != -1;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
+
 		return name;
 	}
 
 	@Override
 	public void setName(String name) throws RARException {
-		// TODO Auto-generated method stub
+
 		this.name = name;
 	}
 
 	@Override
 	public String getAddress() {
-		// TODO Auto-generated method stub
+
 		return address;
 	}
 
 	@Override
 	public void setAddress(String address) {
-		// TODO Auto-generated method stub
+
 		this.address = address;
 	}
 
 	@Override
 	public int getCapacity() {
-		// TODO Auto-generated method stub
+
 		return capacity;
 	}
 
 	@Override
 	public void setCapacity(int capacity) throws RARException {
-		// TODO Auto-generated method stub
+
 		this.capacity = capacity;
 	}
 	
