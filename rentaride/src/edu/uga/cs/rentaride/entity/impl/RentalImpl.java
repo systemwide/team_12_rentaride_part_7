@@ -34,13 +34,13 @@ public class RentalImpl
 	}// end constructor 1
 	
 	
-	public RentalImpl(long id, Date pickupDate, Date returnDate, Boolean isLate, int charges, Vehicle vehicle,
+	public RentalImpl(long id, Date pickupTime, Date returnTime, Boolean isLate, int charges, Vehicle vehicle,
 			Customer customer, Reservation reservation, Comment comment)
 	{
 		super();
 		this.id =			id;
-		this.pickupTime = 	pickupDate;
-		this.returnTime = 	returnDate;
+		this.pickupTime = 	pickupTime;
+		this.returnTime = 	returnTime;
 		this.isLate = 		isLate;
 		this.charges = 		charges;
 		this.vehicle =		vehicle;
@@ -70,7 +70,7 @@ public class RentalImpl
 	@Override
 	public Date getPickupTime() {
 
-		return null;
+		return pickupTime;
 	}
 
 	@Override
