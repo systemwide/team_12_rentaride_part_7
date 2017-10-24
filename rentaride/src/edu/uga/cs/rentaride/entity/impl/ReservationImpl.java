@@ -1,3 +1,5 @@
+package edu.uga.cs.rentaride.entity.impl;
+
 import java.util.Date;
 
 import edu.uga.cs.rentaride.RARException;
