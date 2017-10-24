@@ -1,38 +1,38 @@
-package edu.uga.cs.rentaride.entity;
-
+package edu.uga.cs.rentaride.entity.impl;
 
 import java.util.List;
-
 import edu.uga.cs.rentaride.RARException;
+import edu.uga.cs.rentaride.entity.*;
 import edu.uga.cs.rentaride.persistence.Persistable;
-
 
 /** This class represents possible vehicle types of all vehicles in the Rent-A-Ride system.
  * The types should be similar to sedan, pickup, luxury sedan, etc.
  *
  */
-public interface VehicleType
-    extends Persistable
+public class VehicleTypeImpl
+	implements VehicleType
 {
-	String name;
-	List<HourlyPrice> hourlyPriceList;
-	List<Vehicle> vehicleList;
-	List<Reservation> reservationList;
+	private long 				id;
+	private String 				name;
+	private List<HourlyPrice> 	hourlyPriceList;
+	private 	List<Vehicle> 		vehicleList;
+	private	List<Reservation> 	reservationList;
 	
-	public VehicleType()
+	public VehicleTypeImpl()
 	{
-		name = "";
-		hourlyPriceList = null;
-		vehicleList = null;
-		reservationList = null;
+		this.id = -1;
+		this.name = "";
+		this.hourlyPriceList = null;
+		this.vehicleList = null;
+		this.reservationList = null;
 	}
 	
-	public VehicleType(String name, List<hourlyPrice> hourlyPrice, List<Vehicle> vehicle, List<Reservation> reservation)
+	public VehicleTypeImpl(long id, String name, List<HourlyPrice> hourlyPrice, List<Vehicle> vehicle, List<Reservation> reservation)
 	{
 		this.name = name;
-		hourlyPriceList = hourlyPrice;
-		vehicleList = vehicle;
-		reservationList = reservation;
+		this.hourlyPriceList = hourlyPrice;
+		this.vehicleList = vehicle;
+		this.reservationList = reservation;
 	}
 	
     /** Return the name of this vehicle type.
@@ -75,4 +75,22 @@ public interface VehicleType
     {
     		return reservationList;
     }
+
+	@Override
+	public long getId() {
+		// TODO Auto-generated method stub
+		return id;
+	}
+
+	@Override
+	public void setId(long id) {
+		// TODO Auto-generated method stub
+		this.id = id;
+	}
+
+	@Override
+	public boolean isPersistent() {
+		// TODO Auto-generated method stub
+		return id != -1;
+	}
 }
