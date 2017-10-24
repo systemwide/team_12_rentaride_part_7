@@ -142,16 +142,24 @@ public class CustomerImpl
 	@Override
 	public List<Comment> getComments() {
 		// TODO Auto-generated method stub
+		List<Comment> list = null;
 		if(this.isPersistent())
 		{
-			
-		
+			list = this.getComments();
+			return list;
 		}
-		return null;
+		else return null;
 	}
 
 	@Override
 	public List<Rental> getRentals() {
 		// TODO Auto-generated method stub
-		return null;
+		List<Rental> list = null;
+		if(this.isPersistent())
+		{
+			list = this.getRentals();
+		}
+		return list;
 	}
+
+}// end class

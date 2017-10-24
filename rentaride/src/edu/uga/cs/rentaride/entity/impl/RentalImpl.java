@@ -50,37 +50,37 @@ public class RentalImpl
 	
 	@Override
 	public long getId() {
-		// TODO Auto-generated method stub
+
 		return id;
 	}
 
 	@Override
 	public void setId(long id) {
-		// TODO Auto-generated method stub
+
 		this.id = id;
 	}
 
 	@Override
 	public boolean isPersistent() {
-		// TODO Auto-generated method stub
+
 		return id != -1;
 	}
 
 	@Override
 	public Date getPickupTime() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public void setPickupTime(Date pickupTime) {
-		// TODO Auto-generated method stub
+
 		this.pickupTime = pickupTime;
 	}
 
 	@Override
 	public Date getReturnTime() {
-		// TODO Auto-generated method stub
+
 		return returnTime;
 	}
 
@@ -92,61 +92,61 @@ public class RentalImpl
 
 	@Override
 	public boolean getLate() {
-		// TODO Auto-generated method stub
+
 		return isLate;
 	}
 
 	@Override
 	public int getCharges() {
-		// TODO Auto-generated method stub
+
 		return charges;
 	}
 
 	@Override
 	public void setCharges(int charges) throws RARException {
-		// TODO Auto-generated method stub
+
 		this.charges = charges;
 	}
 
 	@Override
 	public Reservation getReservation() {
-		// TODO Auto-generated method stub
+
 		return reservation;
 	}
 
 	@Override
 	public void setReservation(Reservation reservation) throws RARException {
-		// TODO Auto-generated method stub
+
 		this.reservation = reservation;
 	}
 
 	@Override
 	public Vehicle getVehicle() {
-		// TODO Auto-generated method stub
+
 		return vehicle;
 	}
 
 	@Override
 	public void setVehicle(Vehicle vehicle) throws RARException {
-		// TODO Auto-generated method stub
+
 		this.vehicle = vehicle;
 	}
 
 	@Override
 	public Customer getCustomer() {
-		// TODO Auto-generated method stub
+
 		return customer;
 	}
 
 	@Override
 	public Comment getComment() {
-		// TODO Auto-generated method stub
+
 		return comment;
 	}
 
 	@Override
 	public void setComment(Comment comment) {
-		// TODO Auto-generated method stub
+
 		this.comment = comment;
 	}
 	
