@@ -50,7 +50,7 @@ public class ObjectLayerImpl implements ObjectLayer {
 	
     public Administrator createAdministrator( String firstName, String lastName, String userName, 
                                               String password, String email, String address, Date createDate ) throws RARException{
-    	AdministratorImpl admin = new AdministratorImpl(0, firstName, lastName, userName, password, email, address, createDate);
+    	AdministratorImpl admin = new AdministratorImpl(-1, firstName, lastName, userName, password, email, address, createDate);
     	PersistableImpl.setPersistenceLayer(persistence);
     	return admin;
     }
@@ -115,7 +115,7 @@ public class ObjectLayerImpl implements ObjectLayer {
     public Customer createCustomer( String firstName, String lastName, String userName, String password,
             String email, String address, Date createDate, Date membershipExpiration, String licenseState, 
             String licenseNumber, String cardNumber, Date cardExpiration ) throws RARException{
-    	CustomerImpl customer = new CustomerImpl(0, firstName, lastName, userName, password, email, address, createDate, membershipExpiration, licenseState, licenseNumber,cardNumber, cardExpiration, null);
+    	CustomerImpl customer = new CustomerImpl(-1, firstName, lastName, userName, password, email, address, createDate, membershipExpiration, licenseState, licenseNumber,cardNumber, cardExpiration, null);
     	PersistableImpl.setPersistenceLayer(persistence);
     	return customer;
     }
@@ -167,10 +167,7 @@ public class ObjectLayerImpl implements ObjectLayer {
      * @throws RARException in case the name is non-unique or the capacity is non-positive
      */
     public RentalLocation createRentalLocation( String name, String address, int capacity ) throws RARException{
-    	RentalLocationImpl rentalLoc = new RentalLocationImpl();
-    	rentalLoc.setName(name);
-    	rentalLoc.setAddress(address);
-    	rentalLoc.setCapacity(capacity);
+    	RentalLocationImpl rentalLoc = new RentalLocationImpl(-1, name, address, capacity);
     	PersistableImpl.setPersistenceLayer(persistence);
     	return rentalLoc;
     }
@@ -225,7 +222,7 @@ public class ObjectLayerImpl implements ObjectLayer {
      */
     public Reservation createReservation( Date pickupTime, int rentalLength, VehicleType vehicleType, 
                                           RentalLocation rentalLocation, Customer customer ) throws RARException{
-    	ReservationImpl reservation = new ReservationImpl(0, pickupTime, rentalLength, null, customer, vehicleType, rentalLocation, null);// null1 = Bool cancelled, null2 = rental
+    	ReservationImpl reservation = new ReservationImpl(-1, pickupTime, rentalLength, null, customer, vehicleType, rentalLocation, null);// null1 = Bool cancelled, null2 = rental
     	PersistableImpl.setPersistenceLayer(persistence);
     	return reservation;
     }
@@ -277,7 +274,7 @@ public class ObjectLayerImpl implements ObjectLayer {
      * @throws RARException in case either the pickupTime is in the past or if the reservation or the vehicle is null
      */
     public Rental createRental( Date pickupTime, Reservation reservation, Vehicle vehicle ) throws RARException{
-    	RentalImpl rental = new RentalImpl(0, pickupTime, null, null, 0, vehicle, null, reservation, null);
+    	RentalImpl rental = new RentalImpl(-1, pickupTime, null, null, 0, vehicle, null, reservation, null);
     	PersistableImpl.setPersistenceLayer(persistence);
     	return rental;
     }
@@ -327,7 +324,7 @@ public class ObjectLayerImpl implements ObjectLayer {
      * @throws RARException in case the vehicle type name is non-unique
      */
     public VehicleType createVehicleType( String name ) throws RARException{
-    	VehicleTypeImpl vehicleType = new VehicleTypeImpl(0, name, null, null, null);
+    	VehicleTypeImpl vehicleType = new VehicleTypeImpl(-1, name, null, null, null);
     	PersistableImpl.setPersistenceLayer(persistence);
     	return vehicleType;
     }
@@ -388,7 +385,7 @@ public class ObjectLayerImpl implements ObjectLayer {
     public Vehicle createVehicle( String make, String model, int year, String registrationTag, int mileage, Date lastServiced,
                                   VehicleType vehicleType, RentalLocation rentalLocation, VehicleCondition vehicleCondition, 
                                   VehicleStatus vehicleStatus ) throws RARException{
-    	VehicleImpl vehicle = new VehicleImpl(0, make, model, year,  mileage, registrationTag,lastServiced, vehicleStatus, vehicleCondition, rentalLocation, vehicleType);
+    	VehicleImpl vehicle = new VehicleImpl(-1, make, model, year,  mileage, registrationTag,lastServiced, vehicleStatus, vehicleCondition, rentalLocation, vehicleType);
     	PersistableImpl.setPersistenceLayer(persistence);
     	return vehicle;
     }
@@ -440,7 +437,7 @@ public class ObjectLayerImpl implements ObjectLayer {
      * @throws RARException in case either the rental is null
      */
     public Comment createComment( String text, Date date, Rental rental ) throws RARException{
-    	CommentImpl comment = new CommentImpl(0, text, date, null, rental);
+    	CommentImpl comment = new CommentImpl(-1, text, date, null, rental);
     	PersistableImpl.setPersistenceLayer(persistence);
     	return comment;
     }
@@ -492,7 +489,7 @@ public class ObjectLayerImpl implements ObjectLayer {
      * @throws RARException in case either maxHrs or price is non-positive or if the vehicleType is null
      */
     public HourlyPrice createHourlyPrice( int maxHrs, int price, VehicleType vehicleType ) throws RARException{
-    	HourlyPriceImpl hourlyPrice = new HourlyPriceImpl(0, maxHrs, price, vehicleType);
+    	HourlyPriceImpl hourlyPrice = new HourlyPriceImpl(-1, maxHrs, price, vehicleType);
     	PersistableImpl.setPersistenceLayer(persistence);
     	return hourlyPrice;
     }
@@ -540,7 +537,9 @@ public class ObjectLayerImpl implements ObjectLayer {
      * @return the new RentARideConfig object instance
      */
     public RentARideParams createRentARideParams() {
-    	
+    	RentARideParamsImpl rentARide = new RentARideParamsImpl();
+    	PersistableImpl.setPersistenceLayer(persistence);
+    	return rentARide;
     }
     
     /**
