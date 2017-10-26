@@ -116,7 +116,7 @@ public class VehicleImpl
 	@Override
 	public void setRegistrationTag(String registrationTag) {
 		// TODO Auto-generated method stub
-		this.registrationTag = registrationTag
+		this.registrationTag = registrationTag;
 	}
 	@Override
 	public int getMileage() {

@@ -458,7 +458,7 @@ private ObjectLayer objectLayer = null;
     	catch( Exception e ) {      // just in case...
     		throw new RARException( "CustomerManager.restoreReservation: Could not restore persistent Customer objects; Root cause: " + e );
     	}
-
-    	throw new RARException( "CustomerManager.restoreReservation: Could not restore persistent Customer objects" );
-    } 
+    }
+    
+    	 
 }

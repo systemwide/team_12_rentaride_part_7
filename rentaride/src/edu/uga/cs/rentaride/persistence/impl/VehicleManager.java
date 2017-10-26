@@ -621,10 +621,10 @@ public class VehicleManager {
                   // set this to null for the "lazy" association traversal
                   //nextRental.setPersonFounder( null );
                   
-                  Rental.add( nextRental );
+                  rental.add( nextRental );
               }
               
-              return Rental;
+              return rental;
           }
       }
       catch( Exception e ) {      // just in case...

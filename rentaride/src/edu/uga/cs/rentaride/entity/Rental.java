@@ -92,4 +92,6 @@ public interface Rental
      * @param comment the Comment to be associated with this rental
      */
     public void setComment( Comment comment );
+
+	public void setCustomer(Customer customer);
 }

@@ -150,5 +150,12 @@ public class RentalImpl
 
 		this.comment = comment;
 	}
+
+
+	@Override
+	public void setCustomer(Customer customer) {
+		// TODO Auto-generated method stub
+		this.customer = customer;
+	}
 	
 }// end Class RentalImpl

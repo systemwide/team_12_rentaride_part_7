@@ -385,5 +385,10 @@ condition.setLength( 0 );
         }
         catch( SQLException e ) {
             e.printStackTrace();
-            throw new RARException( "RentalLocationManager.delete: failed to delete a Rental Location: " + e );        }
+            throw new RARException( "RentalLocationManager.delete: failed to delete a Rental Location: " + e ); 
+            }
+    
     }
+}
+
+    
