@@ -315,6 +315,8 @@ public class ReservationManager {
    catch( Exception e ) {      // just in case...
        throw new RARException( "ReservationManager.restore: Could not restore persistent Reservation objects; Root cause: " + e );
    }
+       
+   }
 
  
     
