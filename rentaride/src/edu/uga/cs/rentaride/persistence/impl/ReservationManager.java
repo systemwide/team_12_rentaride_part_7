@@ -1,4 +1,4 @@
-qpackage edu.uga.cs.rentaride.persistence.impl;
+package edu.uga.cs.rentaride.persistence.impl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -316,8 +316,7 @@ public class ReservationManager {
        throw new RARException( "ReservationManager.restore: Could not restore persistent Reservation objects; Root cause: " + e );
    }
 
-   throw new RARException( "ReservationManager.restore: Could not restore persistent Reservation objects" );
-       }
+ 
     
     
     public RentalLocation restoreReservationRentalLocation( Reservation reservation ) throws RARException
@@ -404,8 +403,7 @@ condition.setLength( 0 );
        catch( Exception e ) {      // just in case...
     	   throw new RARException( "ReservationManager.restore: Could not restore Reservation Customer objects; Root cause: " + e );
        }
-
-       throw new RARException( "ReservationManager.restore: Could not restore persistent Reservation objects" );	
+	
     } 
     
     public VehicleType restoreReservationVehicleType( Reservation reservation ) throws RARException
@@ -487,8 +485,7 @@ condition.setLength( 0 );
        catch( Exception e ) {      // just in case...
     	   throw new RARException( "ReservationManager.restore: Could not restore Reservation Customer objects; Root cause: " + e );
        }
-
-       throw new RARException( "ReservationManager.restore: Could not restore persistent Reservation objects" );	
+	
     }
     
     
@@ -582,7 +579,7 @@ condition.setLength( 0 );
     	   throw new RARException( "ReservationManager.restore: Could not restore Reservation Customer objects; Root cause: " + e );
        }
 
-       throw new RARException( "ReservationManager.restore: Could not restore persistent Reservation objects" );	
+       	
     }
     
     

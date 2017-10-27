@@ -307,7 +307,7 @@ class RentalManager
            throw new RARException( "RentalManager.restore: Could not restore persistent Rental objects; Root cause: " + e );
        }
 
-       throw new RARException( "RentalManager.restore: Could not restore persistent Rental objects" );	}
+    }
     
     public Reservation restoreRentalReservation( Rental rental ) throws RARException
     {
@@ -393,7 +393,7 @@ condition.setLength( 0 );
            throw new RARException( "RentalManager.restore: Could not restore persistent Rental objects; Root cause: " + e );
        }
 
-       throw new RARException( "RentalManager.restore: Could not restore persistent Rental objects" );		
+       		
     }
     
     public Vehicle restoreVehicleRental( Rental rental ) throws RARException
@@ -489,9 +489,7 @@ condition.setLength( 0 );
        catch( Exception e ) {      // just in case...
            throw new RARException( "RentalManager.restore: Could not restore persistent Rental objects; Root cause: " + e );
        }
-
-       throw new RARException( "RentalManager.restore: Could not restore persistent Rental objects" );	
-  	
+        	
     	
     }
     

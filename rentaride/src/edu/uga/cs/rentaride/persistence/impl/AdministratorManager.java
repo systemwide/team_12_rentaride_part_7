@@ -215,7 +215,7 @@ public class AdministratorManager {
                     email = rs.getString( 6 );
                     address = rs.getString(7);
                     created = rs.getDate( 8 );
-                    userStatus = rs.getString(userStatus);
+                    userStatus = rs.getString(9);
                     
                     nextAdmin = objectLayer.createAdministrator(); // create a proxy Administrator object
                     // and now set its retrieved attributes

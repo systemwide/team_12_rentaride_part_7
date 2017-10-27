@@ -398,7 +398,7 @@ public class VehicleManager {
             throw new RARException( "VehicleManager.restore: Could not restore persistent Vehicle objects; Root cause: " + e );
         }
 
-        throw new RARException( "VehicleManager.restore: Could not restore persistent Vehicle objects" );
+        
     }
     
     public VehicleType restoreVehicleVehicleType( Vehicle vehicle ) throws RARException
@@ -502,7 +502,6 @@ public class VehicleManager {
            throw new RARException( "VehicleManager.restore: Could not restore persistent Vehicle objects; Root cause: " + e );
        }
 
-       throw new RARException( "VehicleManager.restore: Could not restore persistent Vehicle objects" );
     	
     }
     
