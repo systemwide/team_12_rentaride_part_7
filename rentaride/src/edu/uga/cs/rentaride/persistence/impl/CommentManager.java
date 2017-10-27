@@ -206,7 +206,7 @@ public class CommentManager{
 		}
 	}
 	
-	public Rental restoreRentalComment(Comment comment) {
+	public Rental restoreRentalComment(Comment comment) throws RARException {
 		String selectRentalSQL = "select r.id, r.pickupDate, r.return, r.isLate, r.charges, r.vehicleID, r.customer, r.reservationID where p.id = c.userID";
 		Statement stmt = null;
 		StringBuffer query = new StringBuffer(100);

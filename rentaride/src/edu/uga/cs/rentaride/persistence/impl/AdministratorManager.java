@@ -25,17 +25,11 @@ public class AdministratorManager {
 	public void store(Administrator admin)
 		throws RARException
 	{
-		String insertAdminSql = "insert into Administrator ( firstname, lastname, username, password, email, address, created, id) values ( ?, ?, ?, ?, ?, ?, ?, ? )";
-		String updateAdminSql = "update Administrator set firstname = ?, lastname = ?, username = ?, password = ?, email = ?, address = ?, created = ?, id = ?, where id = ?";
+		String insertAdminSql = "insert into Administrator ( firstname, lastname, username, password, email, address, created, userStatus) values ( ?, ?, ?, ?, ?, ?, ?, ? )";
+		String updateAdminSql = "update Administrator set firstname = ?, lastname = ?, username = ?, password = ?, email = ?, address = ?, created = ?, userStatus = ? where id = ?";
 		PreparedStatement stmt = null;
 		int inscnt;
 		long adminId;
-	
-		/*
-		if(admin.getId() == -1){
-			throw new RARException( "AdministratorManager.save: Attempting to save an Administrator without a id");		
-		}	
-		*/
 		
 		try {
 
@@ -44,19 +38,16 @@ public class AdministratorManager {
             else
                 stmt = (PreparedStatement) conn.prepareStatement( updateAdminSql );
 		
-           //firstname
             if( admin.getFirstName() != null ) // name is unique unique and non null
                 stmt.setString( 1, admin.getFirstName() );
             else 
                 throw new RARException( "AdministratorManager.save: can't save an Administrator: first name undefined" );
 
-            //lastname
             if( admin.getLastName() != null ) // name is unique unique and non null
                 stmt.setString( 2, admin.getLastName() );
             else 
                 throw new RARException( "AdministratorManager.save: can't save an Administrator: last name undefined" );
             
-            //username
             if( admin.getUserName()!= null ) // name is unique unique and non null
                 stmt.setString( 3, admin.getUserName() );
             else 
@@ -87,10 +78,15 @@ public class AdministratorManager {
                 stmt.setDate( 7,  sDate );
             }
             else
-                stmt.setNull(3, java.sql.Types.DATE);
+                stmt.setNull(7, java.sql.Types.DATE);
+            
+            if( admin.getUserStatus() != null )
+                stmt.setString( 8, admin.getUserStatus() );
+            else
+                stmt.setNull( 8, java.sql.Types.VARCHAR );
             
             if( admin.isPersistent() )
-                stmt.setLong( 8, admin.getId() );
+                stmt.setLong( 9, admin.getId() );
 
             inscnt = stmt.executeUpdate();
 
@@ -109,7 +105,7 @@ public class AdministratorManager {
                             // retrieve the last insert auto_increment value
                             adminId = r.getLong( 1 );
                             if( adminId > 0 )
-                                admin.setId( adminId ); // set this person's db id (proxy object)
+                                admin.setId( adminId ); // set this Administrator's db id (proxy object)
                         }
                     }
                 }
@@ -130,7 +126,7 @@ public class AdministratorManager {
 	public List<Administrator> restore( Administrator modelAdmin ) 
             throws RARException
     {
-        String       selectAdministratorSql = "select id, name, address, established from club";
+        String       selectAdministratorSql = "select id, firstname, lastname, username, password, email, address, created, userStatus from Administrator";
         Statement    stmt = null;
         StringBuffer query = new StringBuffer( 100 );
         StringBuffer condition = new StringBuffer( 100 );
@@ -178,6 +174,11 @@ public class AdministratorManager {
                         condition.append( " where" );
                     condition.append( " created = '" + modelAdmin.getCreatedDate() + "'" );
                 }
+                
+                if( modelAdmin.getUserStatus() != null )
+                	if(condition.length() > 0 )
+    					condition.append(" and ");
+                    condition.append( " where user status = '" + modelAdmin.getUserStatus() + "'" ); 
 
             }
         }
@@ -198,6 +199,7 @@ public class AdministratorManager {
                 String email;
                 String address;
                 Date   created;
+                String userStatus;
                 Administrator   nextAdmin = null;
                 
                 ResultSet rs = stmt.getResultSet();
@@ -213,8 +215,9 @@ public class AdministratorManager {
                     email = rs.getString( 6 );
                     address = rs.getString(7);
                     created = rs.getDate( 8 );
+                    userStatus = rs.getString(userStatus);
                     
-                    nextAdmin = objectLayer.createAdministrator(); // create a proxy club object
+                    nextAdmin = objectLayer.createAdministrator(); // create a proxy Administrator object
                     // and now set its retrieved attributes
                     nextAdmin.setId( id );
                     nextAdmin.setFirstName( firstName );
@@ -222,7 +225,7 @@ public class AdministratorManager {
                     nextAdmin.setEmail(email);
                     nextAdmin.setAddress( address );
                     nextAdmin.setCreateDate( created );
-                    // set this to null for the "lazy" association traversal
+                    nextAdmin.setUserStatus(null); // set this to null for the "lazy" association traversal
                    // nextAdmin.setPersonFounder( null );
                     
                     administrator.add( nextAdmin );
@@ -240,25 +243,25 @@ public class AdministratorManager {
 
 	public void deleteAdministrator( Administrator administrator ) throws RARException
 	{
-        String               deleteHourlyPriceSql = "delete from hourly price where id = ?";              
+        String               deleteAdministratorSql = "delete from hourly price where id = ?";              
         PreparedStatement    stmt = null;
         int                  inscnt;
              
-        if( !administrator.isPersistent() ) // is the Hourly Price object persistent?  If not, nothing to actually delete
+        if( !administrator.isPersistent() ) // is the Administrator object persistent?  If not, nothing to actually delete
             return;
         
         try {
-            stmt = (PreparedStatement) conn.prepareStatement( deleteHourlyPriceSql );         
+            stmt = (PreparedStatement) conn.prepareStatement( deleteAdministratorSql );         
             stmt.setLong( 1, administrator.getId() );
             inscnt = stmt.executeUpdate();          
             if( inscnt == 1 ) {
                 return;
             }
             else
-                throw new RARException( "HourlyPriceManager.delete: failed to delete a Hourly Price" );
+                throw new RARException( "AdministratorManager.delete: failed to delete a Administrator" );
         }
         catch( SQLException e ) {
             e.printStackTrace();
-            throw new RARException( "HourlyPriceManager.delete: failed to delete a Hourly Price: " + e );        }
+            throw new RARException( "AdministratorManager.delete: failed to delete a Administrator: " + e );        }
     }
 }

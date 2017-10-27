@@ -174,8 +174,8 @@ public class VehicleTypeManager {
 	
 	public List<Reservation> restoreReservationVehicleType( VehicleType vehicleType ) throws RARException
 	{
-		String       selectVehicleTypeSql = "select r.customer, r.pickupTime, r.rental, r.rentalDuration, r.rentalLocation, r.vehicleType, r.reservationID, " + 
-				   "  vt.typeName, vt.vehicleTypeId from RentalLocation r, VehicleType vt where r.reservationID = vt.vehicleTypeId";
+		String       selectVehicleTypeSql = "select r.id, r.customer, r.pickupTime, r.rental, r.length, r.locationID, r.typeID, " + 
+				   "  vt.typeName, vt.id from RentalLocation r, VehicleType vt where r.reservationID = vt.typeId";
 		Statement    stmt = null;
 		StringBuffer query = new StringBuffer( 100 );
 		StringBuffer condition = new StringBuffer( 100 );
@@ -202,12 +202,12 @@ public class VehicleTypeManager {
 	           if( stmt.execute( query.toString() ) ) { // statement returned a result
 	               
 	        	   long   id;
-	        	   String customer;
 	               Date pickupT;
 	               int length;
 	               String cancelled;
-	               int typeId;
-	               String location;
+	        	   String customer;
+	               long typeId;
+	               long location;
 	               Reservation nextReservation = null;
 	               
 	               ResultSet rs = stmt.getResultSet();
@@ -216,18 +216,22 @@ public class VehicleTypeManager {
 	               while( rs.next() ) {
 	                   
 	                   id = rs.getLong( 1 );
-	                   customer = rs.getString(customer);
 	                   pickupT = rs.getDate( 2 );
 	                   length = rs.getInt( 3 );
-	                   location = rs.getString(4);
+	                   cancelled = rs.getString(4);
+	                   customer = rs.getString(5);
+	                   typeId = rs.getLong(6);
+	                   location = rs.getLong(7);
 	                   
 	                   nextReservation = objectLayer.createReservation(); // create a proxy reservation object
 	                   // and now set its retrieved attributes
 	                   nextReservation.setId( id );
-	                   nextReservation.setCustomer(customer);
+	                   nextReservation.setCustomer(null); //LAZY??
 	                   nextReservation.setPickupTime(pickupT);
 	                   nextReservation.setLength(length);
-	                   nextReservation.setRentalLocation(location);
+	                   nextReservation.setRentalLocation(null); //LAZY??
+	                   nextReservation.setVehicleType(null); //LAZY??
+	                   nextReservation.setRental(null);
 	                   // set this to null for the "lazy" association traversal
 	                   //nextReservation.setPersonFounder( null );
 	                   
@@ -313,10 +317,10 @@ public class VehicleTypeManager {
                     nextVehcle.setMileage(mileage);
                     nextVehcle.setRegistrationTag(tag);
                     nextVehcle.setLastServiced(lastServiced);
-                    nextVehcle.setStatus(status);
-                    nextVehcle.setCondition(condition);
-                    nextVehcle.setRentalLocation(rentalLoc);
-                    nextVehcle.setVehicleType(vehicleId);
+                    nextVehcle.setStatus(null);
+                    nextVehcle.setCondition(null);
+                    nextVehcle.setRentalLocation(null);
+                    nextVehcle.setVehicleType(null);
                     
                     // set this to null for the "lazy" association traversal
                     //nextCustomer.setPersonFounder( null );

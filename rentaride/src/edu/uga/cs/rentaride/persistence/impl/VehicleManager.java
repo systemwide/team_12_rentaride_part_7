@@ -140,13 +140,13 @@ public class VehicleManager {
 
         condition.setLength( 0 );
         
-        // form the query based on the given Club object instance
+        // form the query based on the given Vehicle object instance
         query.append( selectVehicleSql );
         
         if( modelVehicle != null ) {
-            if( modelVehicle.getId() >= 0 ) // id is unique, so it is sufficient to get a person
+            if( modelVehicle.getId() >= 0 ) // id is unique, so it is sufficient to get a vehicle
                 query.append( " where id = " + modelVehicle.getId() );
-            else if( modelVehicle.getRegistrationTag() != null ) // userName is unique, so it is sufficient to get a person
+            else if( modelVehicle.getRegistrationTag() != null ) // tag is unique, so it is sufficient to get a person
                 query.append( " where registrationTag = '" + modelVehicle.getRegistrationTag() + "'" );
             else
             {   
@@ -158,17 +158,17 @@ public class VehicleManager {
                 if( modelVehicle.getYear()!= 0 )
                   	if(condition.length() > 0 )
         				condition.append(" and ");
-                    query.append( "vehicleYear = '" + modelVehicle.getYear() + "'" );    
+                    condition.append( "vehicleYear = '" + modelVehicle.getYear() + "'" );    
                 
                 if( modelVehicle.getModel() != null )
                 	if(condition.length() > 0 )
     					condition.append(" and ");
-                    query.append( "model = '" + modelVehicle.getModel() + "'" );  
+                	condition.append( "model = '" + modelVehicle.getModel() + "'" );  
                 
                if( modelVehicle.getMileage() != 0 )
                    	if(condition.length() > 0 )
         				condition.append(" and ");
-                    query.append( "mileage = '" + modelVehicle.getMileage() + "'" );        
+                    condition.append( "mileage = '" + modelVehicle.getMileage() + "'" );        
                         
                if( modelVehicle.getLastServiced() != null )
                   	if(condition.length() > 0 )
@@ -178,22 +178,22 @@ public class VehicleManager {
                if( modelVehicle.getStatus() != null )
                 	if(condition.length() > 0 )
     					condition.append(" and ");
-                    query.append( "status = '" + modelVehicle.getStatus() + "'" );   
+                    condition.append( "status = '" + modelVehicle.getStatus() + "'" );   
                
                if( modelVehicle.getCondition() != null )
                   	if(condition.length() > 0 )
        					condition.append(" and ");
-                    query.append( "vehicleCondition = '" + modelVehicle.getCondition() + "'" );     
+               condition.append( "vehicleCondition = '" + modelVehicle.getCondition() + "'" );     
                     
                if( modelVehicle.getRentalLocation() != null )
                   	if(condition.length() > 0 )
                   		condition.append(" and ");
-                    query.append( "rentalLocation = '" + modelVehicle.getRentalLocation() + "'" );     
+               condition.append( "rentalLocation = '" + modelVehicle.getRentalLocation() + "'" );     
                     
                 if( modelVehicle.getVehicleType() != null )
                 	if(condition.length() > 0 )
     					condition.append(" and ");
-                    query.append( "vehicleType = '" + modelVehicle.getVehicleType() + "'" ); 
+                condition.append( "vehicleType = '" + modelVehicle.getVehicleType() + "'" ); 
             }
         }
         
@@ -244,10 +244,10 @@ public class VehicleManager {
                     nextVehcle.setMileage(mileage);
                     nextVehcle.setRegistrationTag(tag);
                     nextVehcle.setLastServiced(lastServiced);
-                    nextVehcle.setStatus(status);
-                    nextVehcle.setCondition(condition);
-                    nextVehcle.setRentalLocation(rentalLoc);
-                    nextVehcle.setVehicleType(vehicleId);
+                    nextVehcle.setStatus(null);
+                    nextVehcle.setCondition(null);
+                    nextVehcle.setRentalLocation(null);
+                    nextVehcle.setVehicleType(null);
                     
                     // set this to null for the "lazy" association traversal
                     //nextCustomer.setPersonFounder( null );
@@ -299,7 +299,7 @@ public class VehicleManager {
     	Statement    stmt = null;
     	StringBuffer query = new StringBuffer( 100 );
     	StringBuffer condition = new StringBuffer( 100 );
-    	
+    	RentalLocation rentalL;
 
     	condition.setLength( 0 );
 
@@ -382,20 +382,17 @@ public class VehicleManager {
                     address = rs.getString( 3 );
                     capacity = rs.getInt( 4 );
                     
-                    nextRentalL = objectLayer.createRentalLocation(); // create a proxy rental location object
+                    nextRentalL = objectLayer.createRentalLocation(name, address, capacity); // create a proxy rental location object
                     // and now set its retrieved attributes
                     nextRentalL.setId( id );
-                    nextRentalL.setName( name );
-                    nextRentalL.setAddress( address );
-                    nextRentalL.setCapacity( capacity );
                     // set this to null for the "lazy" association traversal
                     //nextRentalL.setPersonFounder( null );
-                    
-                    rentalL.add( nextRentalL );
                 }
                 
-                return rentalL;
+                return nextRentalL;
             }
+            else
+            	return null;
         }
         catch( Exception e ) {      // just in case...
             throw new RARException( "VehicleManager.restore: Could not restore persistent Vehicle objects; Root cause: " + e );
@@ -411,7 +408,7 @@ public class VehicleManager {
     	Statement    stmt = null;
     	StringBuffer query = new StringBuffer( 100 );
     	StringBuffer condition = new StringBuffer( 100 );
-   	
+    	VehicleType vT;
 
     	condition.setLength( 0 );
 
@@ -451,7 +448,7 @@ public class VehicleManager {
           if( vehicle.getStatus() != null )
            	if(condition.length() > 0 )
 					condition.append(" and ");
-               query.append( "status = '" + vehicle.getStatus() + "'" );   
+          condition.append( "status = '" + vehicle.getStatus() + "'" );   
           
           if( vehicle.getCondition() != null )
              	if(condition.length() > 0 )
@@ -473,40 +470,33 @@ public class VehicleManager {
 
            stmt = conn.createStatement();
 
-           // retrieve the persistent Rental Location objects
+           // retrieve the persistent Vehicle Type objects
            //
            if( stmt.execute( query.toString() ) ) { // statement returned a result
                
                long   id;
                String name;
-               String address;
-               int capacity;
-               RentalLocation nextRentalL = null;
+               VehicleType nextvType = null;
                
                ResultSet rs = stmt.getResultSet();
                
-               // retrieve the retrieved clubs
+               // retrieve the retrieved vehicle types
                while( rs.next() ) {
                    
                    id = rs.getLong( 1 );
                    name = rs.getString( 2 );
-                   address = rs.getString( 3 );
-                   capacity = rs.getInt( 4 );
                    
-                   nextRentalL = objectLayer.createRentalLocation(); // create a proxy rental location object
+                   nextvType = objectLayer.createVehicleType(name); // create a proxy vehicle type object
                    // and now set its retrieved attributes
-                   nextRentalL.setId( id );
-                   nextRentalL.setName( name );
-                   nextRentalL.setAddress( address );
-                   nextRentalL.setCapacity( capacity );
+                		   nextvType.setId( id );
                    // set this to null for the "lazy" association traversal
                    //nextRentalL.setPersonFounder( null );
-                   
-                   rentalL.add( nextRentalL );
                }
                
-               return rentalL;
+               return nextvType;
            }
+           else
+        	   return null;
        }
        catch( Exception e ) {      // just in case...
            throw new RARException( "VehicleManager.restore: Could not restore persistent Vehicle objects; Root cause: " + e );
@@ -518,17 +508,17 @@ public class VehicleManager {
     
     public List<Rental> restoreVehicleRental( Vehicle vehicle ) throws RARException
     {
-    	String       selectVRentalSql = "select rental.customer, rental.pickup, rental.return v.make, v.model, v.year, v.mileage, v.tag, v.lastService v.locationID, " + 
+    	String       selectVehicleSql = "select rental.customer, rental.pickup, rental.return v.make, v.model, v.year, v.mileage, v.tag, v.lastService v.locationID, " + 
 				 " v.status, v.vehicleType, v.condition, v.vehicleID, from Vehicle v, Rental rental where v.vehicleId = vt.vehicleTypeId " ;   	
     	Statement    stmt = null;
     	StringBuffer query = new StringBuffer( 100 );
     	StringBuffer condition = new StringBuffer( 100 );
-    	List<Rental> rental = new ArrayList<Rental>();
+    	List<Rental> rentalR = new ArrayList<Rental>();
 
   	condition.setLength( 0 );
 
-  	// form the query based on the given Club object instance
-  	query.append( selectVehicleTypeSql );
+  	// form the query based on the given Rental object instance
+  	query.append( selectVehicleSql );
 
   	if( vehicle != null ) {
   		if( vehicle.getId() >= 0 ) // id is unique, so it is sufficient to get a person
@@ -563,7 +553,7 @@ public class VehicleManager {
          if( vehicle.getStatus() != null )
           	if(condition.length() > 0 )
 					condition.append(" and ");
-              query.append( "status = '" + vehicle.getStatus() + "'" );   
+         condition.append( "status = '" + vehicle.getStatus() + "'" );   
          
          if( vehicle.getCondition() != null )
             	if(condition.length() > 0 )
@@ -621,10 +611,10 @@ public class VehicleManager {
                   // set this to null for the "lazy" association traversal
                   //nextRental.setPersonFounder( null );
                   
-                  rental.add( nextRental );
+                  rentalR.add( nextRental );
               }
               
-              return rental;
+              return rentalR;
           }
       }
       catch( Exception e ) {      // just in case...

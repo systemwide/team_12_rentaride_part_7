@@ -29,17 +29,12 @@ class HourlyPriceManager
     public void store( HourlyPrice hPrice ) 
             throws RARException
     {
-    	String               insertHourlyPriceSql = "insert into HourlyPrice ( maxHours, hourlyprice, hourlyPriceID ) values ( ?, ?, ?, ? )";
-        String               updateHourlyPriceSql = "update HourlyPrice set maxHours = ?, hourlyprice = ?, hourlyPriceID = ? where id = ?";
+    	String               insertHourlyPriceSql = "insert into HourlyPrice ( maxHours, hourlyprice, hourlyPriceID ) values ( ?, ?, ? )";
+        String               updateHourlyPriceSql = "update HourlyPrice set maxHours = ?, hourlyprice = ? where id = ?";
         PreparedStatement    stmt = null;
         int                  inscnt;
         long                 hourlyPriceId;
-
-        /*
-        if( hPrice.getFounderId() == -1 )
-            throw new RARsException( "HourlyPriceManager.save: Attempting to save a Hourly Price without a founder" );
-            */
-                 
+       
         try {
 
             if( !hPrice.isPersistent() )
@@ -47,27 +42,18 @@ class HourlyPriceManager
             else
                 stmt = (PreparedStatement) conn.prepareStatement( updateHourlyPriceSql );
 
-            if( hPrice.getMaxHours() != 0 ) // name is unique unique and non null
+            if( hPrice.getMaxHours() >= 0 ) // name is unique unique and non null
                 stmt.setString( 1, hPrice.getMaxHours() );
             else 
-                throw new RARException( "HourlyPriceManager.save: can't save an HourlyPrice" );
+                throw new RARException( "HourlyPriceManager.save: max hours not set or is not persistent" );
 
-            if( hPrice.getPrice() != 0 )
+            if( hPrice.getPrice() >= 0 )
                 stmt.setString( 2, hPrice.getPrice() );
             else
-                stmt.setNull( 2, java.sql.Types.INTEGER );
- 
-            //idk if we need this next part 
-
-            if( hPrice.getVehicleType() != null && hPrice.getVehicleType().isPersistent() )
-                stmt.setLong( 3, hPrice.getVehicleType().getId());
-            else 
-                throw new RARException( "HourlyPriceManager.save: can't save a Hourly Price: vehicle type is not set or not persistent" );
-            
-            //end of idk
+            	throw new RARException( "HourlyPriceManager.save: price not set or is not persistent" );
             
             if( hPrice.isPersistent() )
-                stmt.setLong( 4, hPrice.getId() );
+                stmt.setLong( 3, hPrice.getId() );
 
             inscnt = stmt.executeUpdate();
 
@@ -107,7 +93,7 @@ class HourlyPriceManager
     public List<HourlyPrice> restore( HourlyPrice modelHourlyPrice ) 
             throws RARException
     {
-        String       selectHourlyPriceSql = "select maxHours and maxPrice from Hourly Price";
+        String       selectHourlyPriceSql = "select maxHours and price from Hourly Price";
         Statement    stmt = null;
         StringBuffer query = new StringBuffer( 100 );
         StringBuffer condition = new StringBuffer( 100 );
@@ -125,16 +111,11 @@ class HourlyPriceManager
             	if( modelHourlyPrice.getMaxHours() > 0 )
                     condition.append( " where maxHours = '" + modelHourlyPrice.getMaxHours() + "'" );
             	
-            	//DO WE NEED THIS
-            	
             	if( modelHourlyPrice.getPrice() > 0){
     				if(condition.length() > 0 )
     					condition.append(" and ");
     				condition.append( "price = '" + modelHourlyPrice.getPrice() + "'" );
-    			}   
-
-            	//END OF DO WE NEED THIS
-            	
+    			}  
             }
         }
         
@@ -166,7 +147,7 @@ class HourlyPriceManager
                     nextHourlyP.setMaxHours( maxHours );
                     nextHourlyP.setPrice( price );
                     // set this to null for the "lazy" association traversal
-                    nextHourlyP.setVehicleType( null );
+                    nextHourlyP.setVehicleType(null);
                     
                     hourlyP.add( nextHourlyP );
                 }
@@ -196,19 +177,16 @@ class HourlyPriceManager
         
         if( hourlyPrice != null ) {
             if( hourlyPrice.getId() >= 0 ) // id is unique, so it is sufficient to get a hourlyPrice
-                query.append( " and h.hourlyPriceid = " + hourlyPrice.getId() );
+                query.append( " hourlyPriceid = " + hourlyPrice.getId() );
             else {
 
                 if( hourlyPrice.getMaxHours() != 0 )
-                	query.append( "maxHours = '" + hourlyPrice.getMaxHours() + "'" );   
+                	condition.append( "maxHours = '" + hourlyPrice.getMaxHours() + "'" );   
 
                 if( hourlyPrice.getPrice() != 0 ) {
                     if( condition.length() > 0 )
-                    	condition.append( " AND" );
-                    query.append( " price = '" + hourlyPrice.getPrice() + "'" );
-                }
-                if( condition.length() > 0 ) {
-                    query.append( condition );
+                    	condition.append( " and" );
+                    condition.append( " price = '" + hourlyPrice.getPrice() + "'" );
                 }
             }
         }
@@ -217,31 +195,26 @@ class HourlyPriceManager
 
             stmt = conn.createStatement();
 
-            // retrieve the persistent Hourly Price object
+            // retrieve the persistent vehicle type object
             //
             if( stmt.execute( query.toString() ) ) { // statement returned a result
                 ResultSet rs = stmt.getResultSet();
                 
                 long   id;
                 String name;
-                int hourlyPriceA;
-                int hourlyPriceB;
                 VehicleType nextVType = null;
                 
                 while( rs.next() ) {
 
                     id = rs.getLong( 1 );
                     name = rs.getString( 2 );
-                    hourlyPriceA = rs.getInt(3);
-                    hourlyPriceB = rs.getInt( 4 );
 
-                    nextVType = objectLayer.createVehicleType(); // create a proxy customer object
+                    nextVType = objectLayer.createVehicleType(); // create a proxy vehicle type object
                     // and now set its retrieved attributes
                     nextVType.setId( id );
                     nextVType.setName(name);
     				// set this to null for the "lazy" association traversal
-    				//nextVType.setPersonFounder( null );
-   
+    				
                     vType.add( nextVType );
                 }
                 
@@ -251,9 +224,9 @@ class HourlyPriceManager
                 return vType;
         }
         catch( Exception e ) {      // just in case...
-            throw new RARException( "HourlyPriceManager.restore: Could not restore persistent Vehicle Type object; Root cause: " + e );
+            throw new RARException( "HourlyPriceManager.restore: Could not restore persistent Hourly Price object; Root cause: " + e );
         }
-        throw new RARException( "HourlyPriceManager.restore: Could not restore persistent Vehicle Type object");
+        
     }
     
     public void delete( HourlyPrice hPrice ) 

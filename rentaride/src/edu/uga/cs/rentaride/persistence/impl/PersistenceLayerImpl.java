@@ -251,8 +251,8 @@ public class PersistenceLayerImpl
 		// TODO Auto-generated method stub
 		
 		
-		
-		return reservationManager.restoreCustomerReservation(reservation);
+		List<Reservation> resList = customer.getReservations();
+		return reservationManager.restoreCustomerReservation(resList);
 	}
 
 	@Override
@@ -272,194 +272,349 @@ public class PersistenceLayerImpl
 			throws RARException 
 	{
 		// TODO Auto-generated method stub
-		reservationManager.restoreReservationRentalLocation(reservation);
+		if(rentalLocation == null)
+			throw new RARException("Invalid - rentalLocation is null");
+		if(!rentalLocation.isPersistent())
+			throw new RARException("Invalid - rentalLocation is not persistent.");
+		reservation.setRentalLocation(rentalLocation);
+		reservationManager.storeReservation(reservation);
 	}
 
 	@Override
 	public RentalLocation restoreReservationRentalLocation(Reservation reservation) throws RARException {
 		// TODO Auto-generated method stub
+		if(reservation == null)
+			throw new RARException("Invalid - reservation is null");
+		if(!reservation.isPersistent())
+			throw new RARException("Invalid - reservation is not persistent");
+		
 		return reservationManager.restoreReservationRentalLocation(reservation);
 	}
 
 	@Override
 	public List<Reservation> restoreReservationRentalLocation(RentalLocation rentalLocation) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		if(rentalLocation == null)
+			throw new RARException("Invalid - rentalLocation is null");
+		if(!rentalLocation.isPersistent())
+			throw new RARException("Invalid - rentalLocation is not persistent");
+		
+		return rentalLocationManager.restoreReservationRentalLocation(rentalLocation);
 	}
 
 	@Override
 	public void deleteReservationRentalLocation(Reservation reservation, RentalLocation rentalLocation)
 			throws RARException {
+		if(reservation == null)
+			throw new RARException("Invalid - reservation is null");
+		if(rentalLocation == null)
+			throw new RARException("Invalid - rentalLocation is null");
+		if(!reservation.isPersistent())
+			throw new RARException("Invalid - reservation is not persistent");
+		if(!rentalLocation.isPersistent())
+			throw new RARException("Invalid - rentalLocation is not persistent");
+		
+		reservation.setRentalLocation(null);
+		reservationManager.storeReservation(reservation);
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void storeReservationVehicleType(Reservation reservation, VehicleType vehicleType) throws RARException {
+	public void storeReservationVehicleType(Reservation reservation, VehicleType vehicleType) throws RARException 
 		// TODO Auto-generated method stub
-		
+	{
+		if(reservation == null)
+			throw new RARException("Invalid - reservation is null");
+		if(vehicleType == null)
+			throw new RARException("Invalid - vehicleType is null");
+		if(!reservation.isPersistent())
+			throw new RARException("Invalid - reservation is not persistent");
+		if(!vehicleType.isPersistent())
+			throw new RARException("Invalid - vehicleType is not persistent");
+		reservation.setVehicleType(vehicleType);
+		reservationManager.storeReservation(reservation);
 	}
 
 	@Override
 	public VehicleType restoreReservationVehicleType(Reservation reservation) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		return reservationManager.restoreReservationVehicleType(reservation);
 	}
 
 	@Override
 	public List<Reservation> restoreReservationVehicleType(VehicleType vehicleType) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		return vehicleTypeManager.restoreReservationVehicleType(vehicleType);
 	}
 
 	@Override
 	public void deleteReservationVehicleType(Reservation reservation, VehicleType vehicleType) throws RARException {
 		// TODO Auto-generated method stub
-		
+		if(reservation == null)
+			throw new RARException("Invalid - reservation is null");
+		if(vehicleType == null)
+			throw new RARException("Invalid - vehicleType is null");
+		if(!reservation.isPersistent())
+			throw new RARException("Invalid - reservation is not persistent");
+		if(!vehicleType.isPersistent())
+			throw new RARException("Invalid - vehicleType is not persistent");
+		reservation.setVehicleType(null);
+		reservationManager.storeReservation(reservation);
 	}
 
 	@Override
 	public void storeVehicleRentalLocation(Vehicle vehicle, RentalLocation rentalLocation) throws RARException {
 		// TODO Auto-generated method stub
-		
+		if(vehicle == null)
+			throw new RARException("Invalid - vehicle is null");
+		if(rentalLocation == null)
+			throw new RARException("Invalid - rentalLocation is null");
+		if(!vehicle.isPersistent())
+			throw new RARException("Invalid - vehicle is not persistent");
+		if(!rentalLocation.isPersistent())
+			throw new RARException("Invalid - rentalLocation is not persistent");
+	
+		vehicle.setRentalLocation(rentalLocation);
+		vehicleManager.storeVehicle(vehicle);
 	}
 
 	@Override
 	public RentalLocation restoreVehicleRentalLocation(Vehicle vehicle) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		if(vehicle == null)
+			throw new RARException("Invalid - vehicle is null");
+		if(!vehicle.isPersistent())
+			throw new RARException("Invalid - vehicle is not persistent");
+		
+		return vehicleManager.restoreVehicleRentalLocation(vehicle);
 	}
 
 	@Override
 	public List<Vehicle> restoreVehicleRentalLocation(RentalLocation rentalLocation) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		if(rentalLocation == null)
+			throw new RARException("Invalid - rentalLocation is null");
+		if(!rentalLocation.isPersistent())
+			throw new RARException("Invalid - rentalLocation is not persistent");
+		
+		return rentalLocationManager.restoreVehicleRentalLocation(rentalLocation);
 	}
 
 	@Override
 	public void deleteVehicleRentalLocation(Vehicle vehicle, RentalLocation rentalLocation) throws RARException {
 		// TODO Auto-generated method stub
+		if(vehicle == null)
+			throw new RARException("Invalid - vehicle is null");
+		if(rentalLocation == null)
+			throw new RARException("Invalid - rentalLocation is null");
+		if(!vehicle.isPersistent())
+			throw new RARException("Invalid - vehicle is not persistent");
+		if(!rentalLocation.isPersistent())
+			throw new RARException("Invalid - rentalLocation is not persistent");
+		
+		vehicle.setRentalLocation(null);
+		vehicleManager.storeVehicle(vehicle);
 		
 	}
 
 	@Override
 	public void storeVehicleVehicleType(Vehicle vehicle, VehicleType vehicleType) throws RARException {
 		// TODO Auto-generated method stub
+		if(vehicle == null)
+			throw new RARException("Invalid - vehicle is null");
+		if(vehicleType == null)
+			throw new RARException("Invalid - vehicleType is null");
+		if(!vehicle.isPersistent())
+			throw new RARException("Invalid - vehicle is not persistent");
+		if(!vehicleType.isPersistent())
+			throw new RARException("Invalid - vehicleType is not persistent");
 		
+		vehicle.setVehicleType(vehicleType);
+		vehicleManager.storeVehicle(vehicle);
 	}
 
 	@Override
 	public VehicleType restoreVehicleVehicleType(Vehicle vehicle) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		return vehicleManager.restoreVehicleVehicleType(vehicle);
 	}
 
 	@Override
 	public List<Vehicle> restoreVehicleVehicleType(VehicleType vehicleType) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		return vehicleManager.restoreVehicleType(vehicleType);
 	}
 
 	@Override
 	public void deleteVehicleVehicleType(Vehicle vehicle, VehicleType vehicleType) throws RARException {
 		// TODO Auto-generated method stub
+		if(vehicle == null)
+			throw new RARException("Invalid - vehicle is null");
+		if(vehicleType == null)
+			throw new RARException("Invalid - vehicleType is null");
+		if(!vehicle.isPersistent())
+			throw new RARException("Invalid - vehicle is not persistent");
+		if(!vehicleType.isPersistent())
+			throw new RARException("Invalid - vehicleType is not persistent");
 		
+		vehicle.setVehicleType(null);
+		vehicleManager.storeVehicle(vehicle);
 	}
 
 	@Override
 	public void storeVehicleTypeHourlyPrice(VehicleType vehicleType, HourlyPrice hourlyPrice) throws RARException {
 		// TODO Auto-generated method stub
 		
+		if(hourlyPrice == null)
+			throw new RARException("Invalid - hourlyPrice is null");
+		if(vehicleType == null)
+			throw new RARException("Invalid - vehicleType is null");
+		if(!hourlyPrice.isPersistent())
+			throw new RARException("Invalid - hourlyPrice is not persistent");
+		if(!vehicleType.isPersistent())
+			throw new RARException("Invalid - vehicleType is not persistent");
+		hourlyPrice.setVehicleType(vehicleType);
+		hourlyPriceManager.store(hourlyPrice);
 	}
 
 	@Override
 	public VehicleType restoreVehicleTypeHourlyPrice(HourlyPrice hourlyPrice) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		return hourlyPriceManager.restoreVehicleTypeHourlyPrice(hourlyPrice);
 	}
 
 	@Override
 	public List<HourlyPrice> restoreVehicleTypeHourlyPrice(VehicleType vehicleType) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		return vehicleTypeManager.restoreVehicleTypeHourlyPrice(vehicleType);
 	}
 
 	@Override
 	public void deleteVehicleTypeHourlyPrice(VehicleType vehicleType, HourlyPrice hourlyPrice) throws RARException {
 		// TODO Auto-generated method stub
+		if(hourlyPrice == null)
+			throw new RARException("Invalid - hourlyPrice is null");
+		if(vehicleType == null)
+			throw new RARException("Invalid - vehicleType is null");
+		if(!hourlyPrice.isPersistent())
+			throw new RARException("Invalid - hourlyPrice is not persistent");
+		if(!vehicleType.isPersistent())
+			throw new RARException("Invalid - vehicleType is not persistent");
 		
+		hourlyPrice.setVehicleType(vehicleType);
+		hourlyPriceManager.store(hourlyPrice);
 	}
 
 	@Override
 	public void storeRentalComment(Rental rental, Comment comment) throws RARException {
 		// TODO Auto-generated method stub
+		if(rental == null)
+			throw new RARException("Invalid - rental is null");
+		if(comment == null)
+			throw new RARException("Invalid - comment is null");
+		if(!rental.isPersistent())
+			throw new RARException("Invalid - rental is not persistent");
+		if(!comment.isPersistent())
+			throw new RARException("Invalid - comment is not persistent");
 		
+		Customer customer = rental.getCustomer();
+		comment.setRental(rental);
+		comment.setCustomer(customer);
 	}
 
 	@Override
 	public Rental restoreRentalComment(Comment comment) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		return commentManager.restoreRentalComment(comment);
 	}
 
 	@Override
-	public List<Comment> restoreRentalComment(Rental rental) throws RARException {
+	public Comment restoreRentalComment(Rental rental) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return rentalManager.restoreRentalComment(rental);
 	}
 
 	@Override
 	public void deleteRentalComment(Rental rental, Comment comment) throws RARException {
 		// TODO Auto-generated method stub
+		rental.setComment(null);
+		commentManager.store(comment);
 		
 	}
 
 	@Override
 	public void storeRentalReservation(Rental rental, Reservation reservation) throws RARException {
 		// TODO Auto-generated method stub
-		
+		rental.setReservation(reservation);
+		rentalManager.store(rental);		
 	}
 
 	@Override
 	public Rental restoreRentalReservation(Reservation reservation) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		return reservationManager.restoreRentalReservation(reservation);
 	}
 
 	@Override
 	public Reservation restoreRentalReservation(Rental rental) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		return rentalManager.restoreRentalReservation(rental);
 	}
 
 	@Override
 	public void deleteRentalReservation(Rental rental, Reservation reservation) throws RARException {
 		// TODO Auto-generated method stub
 		
+		if(rental == null)
+			throw new RARException("Invalid - rental is null");
+		if(reservation == null)
+			throw new RARException("Invalid - reservation is null");
+		if(!rental.isPersistent())
+			throw new RARException("Invalid - rental is not persistent");
+		if(!reservation.isPersistent())
+			throw new RARException("Invalid - reservation is not persistent");
+		
+		reservation.setRental(null);
+		reservationManager.storeReservation(reservation);
 	}
 
 	@Override
 	public void storeVehicleRental(Vehicle vehicle, Rental rental) throws RARException {
 		// TODO Auto-generated method stub
+		if(rental == null)
+			throw new RARException("Invalid - rental is null");
+		if(vehicle == null)
+			throw new RARException("Invalid - vehicle is null");
+		if(!rental.isPersistent())
+			throw new RARException("Invalid - rental is not persistent");
+		if(!vehicle.isPersistent())
+			throw new RARException("Invalid - vehicle is not persistent");
+		
+		
+		rental.setVehicle(vehicle);
+		rentalManager.store(rental);
 		
 	}
 
 	@Override
 	public List<Rental> restoreVehicleRental(Vehicle vehicle) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		return vehicleManager.restoreVehicleRental(vehicle);
 	}
 
 	@Override
 	public Vehicle restoreVehicleRental(Rental rental) throws RARException {
 		// TODO Auto-generated method stub
-		return null;
+		return rentalManager.restoreVehicleRental(rental);
 	}
 
 	@Override
 	public void deleteVehicleRental(Vehicle vehicle, Rental rental) throws RARException {
 		// TODO Auto-generated method stub
-		
+		rental.setVehicle(null);
+		rentalManager.store(rental);
 	}
 	
 }// end class PeristenceLayerImpl

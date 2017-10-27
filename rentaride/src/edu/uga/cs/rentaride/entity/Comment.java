@@ -47,6 +47,8 @@ public interface Comment
      * @return the Customer who made this comment
      */
     public Customer getCustomer();
+
+	public void setCustomer(Customer customer);
     
     /** Set the customer for this Comment.
      * It is a derived association, so there is no setter method for this value.

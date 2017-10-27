@@ -1,4 +1,4 @@
-package edu.uga.cs.rentaride.persistence.impl;
+qpackage edu.uga.cs.rentaride.persistence.impl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,13 +26,102 @@ public class ReservationManager {
 	
     public List<Reservation> restoreReservation( Reservation modelReservation ) throws RARException
     {
-    	
-    	
-    	
-    	
-    	
-    }
-    
+		String  selectVehicleSql = "select id, pickupTime, length, cancelled, customer, locationId, vehicleType, reservationID from Reservation" ;
+		Statement    stmt = null;
+		StringBuffer query = new StringBuffer( 100 );
+		StringBuffer condition = new StringBuffer( 100 );
+		List<Reservation> res = new ArrayList<Reservation>();
+		
+		condition.setLength( 0 );
+		
+		// form the query based on the given Club object instance
+		query.append( selectVehicleSql );
+		
+		if( modelReservation != null ) {
+		if( modelReservation.getId() >= 0 ) // id is unique, so it is sufficient to get a person
+		query.append( " where id = " + modelReservation.getId() );
+		else if( modelReservation.getCustomer() != null ) // customer is unique, so it is sufficient to get a person
+		query.append( " where customer = '" + modelReservation.getCustomer() + "'" );
+		else
+		{   
+			if( modelReservation.getPickupTime() != null )
+				if(condition.length() > 0 )
+					condition.append(" and ");
+			condition.append( " pickup time = '" + modelReservation.getPickupTime() + "'" );   
+		
+			if( modelReservation.getLength()!= 0 )
+				if(condition.length() > 0 )
+				condition.append(" and ");
+			condition.append( "length = '" + modelReservation.getLength() + "'" );    
+			
+			if( modelReservation.getVehicleType() != null )
+				if(condition.length() > 0 )
+					condition.append(" and ");
+			condition.append( "vehicle type id = '" + modelReservation.getVehicleType().getId() + "'" );  
+			
+			if( modelReservation.getRentalLocation() != null )
+				if(condition.length() > 0 )
+					condition.append(" and ");
+			condition.append( "rental location id = '" + modelReservation.getRentalLocation().getId() + "'" );        
+			    
+		}
+		
+		try {
+		
+			stmt = conn.createStatement();
+
+	           // retrieve the persistent Reservation objects
+	           //
+	           if( stmt.execute( query.toString() ) ) { // statement returned a result
+	               
+	        	   long   id;
+	               Date pickupT;
+	               int length;
+	               String cancelled;
+	        	   String customer;
+	               long typeId;
+	               long location;
+	               Reservation nextReservation = null;
+	               
+	               ResultSet rs = stmt.getResultSet();
+	               
+	               // retrieve the retrieved reservations
+	               while( rs.next() ) {
+	                   
+	                   id = rs.getLong( 1 );
+	                   pickupT = rs.getDate( 2 );
+	                   length = rs.getInt( 3 );
+	                   cancelled = rs.getString(4);
+	                   customer = rs.getString(5);
+	                   typeId = rs.getLong(6);
+	                   location = rs.getLong(7);
+	                   
+	                   nextReservation = objectLayer.createReservation(); // create a proxy reservation object
+	                   // and now set its retrieved attributes
+	                   nextReservation.setId( id );
+	                   nextReservation.setCustomer(null); //LAZY??
+	                   nextReservation.setPickupTime(pickupT);
+	                   nextReservation.setLength(length);
+	                   nextReservation.setRentalLocation(null); //LAZY??
+	                   nextReservation.setVehicleType(null); //LAZY??
+	                   nextReservation.setRental(null);
+	                   // set this to null for the "lazy" association traversal
+	                   //nextReservation.setPersonFounder( null );
+	                   
+	                   res.add( nextReservation );
+	               }
+	               
+	               return res;
+	           }
+		}
+		catch( Exception e ) {      // just in case...
+			throw new RARException( "VehiclesManager.restore: Could not restore persistent Vehicle objects; Root cause: " + e );
+		}
+		
+		throw new RARException( "VehiclesManager.restore: Could not restore persistent Vehicle objects" );
+		
+		}
+    } 
     
     public void storeReservation( Reservation reservation ) throws RARException
     {
@@ -69,26 +158,19 @@ public class ReservationManager {
            	 throw new RARException( "ReservationManager.save: can't save a Reservation: customer not set" );
 
             if( reservation.getVehicleType() != null ) {
-              	 stmt.setString(4, reservation.getVehicleType().getId());
+              	 stmt.setLong(4, reservation.getVehicleType().getId());
                }
                else
-              	 throw new RARException( "ReservationManager.save: can't save a Reservation: vehicle type not set" );
+              	 throw new RARException( "ReservationManager.save: can't save a Reservation: vehicle type id not set" );
 
             if( reservation.getRentalLocation() != null ) {
-              	 stmt.setString(5, reservation.getRentalLocation().getId());
+              	 stmt.setLong(5, reservation.getRentalLocation().getId());
                }
                else
               	 throw new RARException( "ReservationManager.save: can't save a Reservation: rental location id not set" );
-
-            if( reservation.getRental() != null ) {
-              	 stmt.setString(6, reservation.getRental().getReservation());
-               }
-               else
-              	 throw new RARException( "ReservationManager.save: can't save a Reservation: reservation not set" );
-
             
             if( reservation.isPersistent() )
-                stmt.setLong( 4, reservation.getId() );
+                stmt.setLong( 6, reservation.getId() );
 
             inscnt = stmt.executeUpdate();
 
@@ -134,7 +216,6 @@ public class ReservationManager {
        Statement    stmt = null;
        StringBuffer query = new StringBuffer( 100 );
        StringBuffer condition = new StringBuffer( 100 );
-       Customer customers;
    	
        condition.setLength( 0 );
        
@@ -217,30 +298,19 @@ public class ReservationManager {
                ccNum = rs.getString( 12 );
                memberUntil = rs.getDate(13);
                
-               nextCustomer = objectLayer.createCustomer();
+               nextCustomer = objectLayer.createCustomer(firstname, lastname, username, password, email, address, createdDate, memberUntil, licState, licNum, ccNum, ccDate);
                // and now set its retrieved attributes
                nextCustomer.setId( id );
-               nextCustomer.setUserName( username );
-               nextCustomer.setAddress( address );
-               nextCustomer.setCreateDate(createdDate);
-               nextCustomer.setFirstName(firstname);
-               nextCustomer.setLastName(lastname);
-               nextCustomer.setEmail(email);
-               nextCustomer.setPassword(password);
-               nextCustomer.setLicenseState(licState);
-               nextCustomer.setLicenseNumber(licNum);
-               nextCustomer.setCreditCardExpiration(ccDate);
-               nextCustomer.setCreditCardNumber(ccNum);
-               nextCustomer.setMemberUntil(memberUntil);
                
                // set this to null for the "lazy" association traversal
                //nextCustomer.setPersonFounder( null );
                
-               customers.add( nextCustomer );
            }
            
-           return customers;
+           return nextCustomer;
            }
+           else
+        	   return null;
        }
    catch( Exception e ) {      // just in case...
        throw new RARException( "ReservationManager.restore: Could not restore persistent Reservation objects; Root cause: " + e );
@@ -258,7 +328,6 @@ public class ReservationManager {
        Statement    stmt = null;
        StringBuffer query = new StringBuffer( 100 );
        StringBuffer condition = new StringBuffer( 100 );
-       RentalLocation rentalL;
    	
 condition.setLength( 0 );
        
@@ -304,9 +373,9 @@ condition.setLength( 0 );
            if( stmt.execute( query.toString() ) ) { // statement returned a result
                
                long   id;
+               String name;
                String address;
                int capacity;
-               String name;
                
                RentalLocation nextRentalL = null;
                
@@ -314,25 +383,23 @@ condition.setLength( 0 );
                while( rs.next() ){ // statement returned a result
                
         	   id = rs.getLong( 1 );
-               address = rs.getString( 2 );
-               capacity = rs.getInt(3);
-               name = rs.getString( 4 );
+        	   name = rs.getString( 2 );
+               address = rs.getString( 3 );
+               capacity = rs.getInt(4);
                
-               nextRentalL = objectLayer.createRentalLocation();
+               nextRentalL = objectLayer.createRentalLocation(name, address, capacity);
                // and now set its retrieved attributes
                nextRentalL.setId( id );
-               nextRentalL.setAddress(address);
-               nextRentalL.setCapacity(capacity);
-               nextRentalL.setName(name);
                
                // set this to null for the "lazy" association traversal
                //nextCustomer.setPersonFounder( null );
                
-               rentalL.add( nextRentalL );
            }
            
-           return rentalL;
+           return nextRentalL;
          }
+           else
+        	   return null;
        }
        catch( Exception e ) {      // just in case...
     	   throw new RARException( "ReservationManager.restore: Could not restore Reservation Customer objects; Root cause: " + e );
@@ -348,7 +415,6 @@ condition.setLength( 0 );
        Statement    stmt = null;
        StringBuffer query = new StringBuffer( 100 );
        StringBuffer condition = new StringBuffer( 100 );
-       VehicleType vehicleType;
    	
 condition.setLength( 0 );
        
@@ -404,19 +470,19 @@ condition.setLength( 0 );
         	   id = rs.getLong( 1 );
                name = rs.getString( 2 );
                
-               nextvType = objectLayer.createVehicleType();
+               nextvType = objectLayer.createVehicleType(name);
                // and now set its retrieved attributes
                nextvType.setId( id );
-               nextvType.setName(name);
                
                // set this to null for the "lazy" association traversal
                //nextCustomer.setPersonFounder( null );
                
-               vehicleType.add( nextvType );
            }
            
-           return vehicleType;
+           return nextvType;
          }
+           else 
+        	   return null;
        }
        catch( Exception e ) {      // just in case...
     	   throw new RARException( "ReservationManager.restore: Could not restore Reservation Customer objects; Root cause: " + e );
@@ -433,7 +499,6 @@ condition.setLength( 0 );
        Statement    stmt = null;
        StringBuffer query = new StringBuffer( 100 );
        StringBuffer condition = new StringBuffer( 100 );
-       Rental rental;
    	
 condition.setLength( 0 );
        
@@ -502,20 +567,16 @@ condition.setLength( 0 );
                        vehicleId = rs.getString( 7 );
                        reservationId = rs.getString( 8 );
                        
-                       nextRental = objectLayer.createRental(); // create a proxy Rental object
+                       nextRental = objectLayer.createRental(pickupT, reservation, null); // create a proxy Rental object
                        // and now set its retrieved attributes
                        nextRental.setId( id );
-                       nextRental.setCharges(charges);
-                       nextRental.setPickupTime(pickupT);
-                       nextRental.setReturnTime(returnT);
                        // set this to null for the "lazy" association traversal
                        //nextRental.setPersonFounder( null );
-               
-               rental.add( nextRental );
            }
-           
-           return rental;
+           return nextRental;
          }
+           else
+         	   return null;
        }
        catch( Exception e ) {      // just in case...
     	   throw new RARException( "ReservationManager.restore: Could not restore Reservation Customer objects; Root cause: " + e );
