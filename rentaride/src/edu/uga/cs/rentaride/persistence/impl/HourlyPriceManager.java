@@ -43,12 +43,12 @@ class HourlyPriceManager
                 stmt = (PreparedStatement) conn.prepareStatement( updateHourlyPriceSql );
 
             if( hPrice.getMaxHours() >= 0 ) // name is unique unique and non null
-                stmt.setString( 1, hPrice.getMaxHours() );
+                stmt.setInt( 1, hPrice.getMaxHours() );
             else 
                 throw new RARException( "HourlyPriceManager.save: max hours not set or is not persistent" );
 
             if( hPrice.getPrice() >= 0 )
-                stmt.setString( 2, hPrice.getPrice() );
+                stmt.setInt( 2, hPrice.getPrice() );
             else
             	throw new RARException( "HourlyPriceManager.save: price not set or is not persistent" );
             

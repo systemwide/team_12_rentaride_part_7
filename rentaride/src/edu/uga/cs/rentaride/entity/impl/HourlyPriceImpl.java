@@ -1,3 +1,4 @@
+package edu.uga.cs.rentaride.entity.impl;
 import edu.uga.cs.rentaride.RARException;
 import edu.uga.cs.rentaride.entity.*;
 

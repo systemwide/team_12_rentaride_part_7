@@ -41,17 +41,17 @@ public class RentARideParamsManager {
                 stmt = (PreparedStatement) conn.prepareStatement( updateRentalSql );
 
             if( rentARideConfig.getId() >=0 ) // id is unique unique and non null
-                stmt.setString( 1, rentARideConfig.getId() );
+                stmt.setLong( 1, rentARideConfig.getId() );
             else 
                 throw new RARException( "RentARideParamsManager.save: can't save a RentARideParams: id undefined" );
 
             if( rentARideConfig.getMembershipPrice() > 0  )
-                stmt.setDate( 2, rentARideConfig.getMembershipPrice() );
+                stmt.setInt( 2, rentARideConfig.getMembershipPrice() );
             else
             	throw new RARException( "RentARideParamsManager.save: can't save a RentARideParams: membership price not set or not persistent" );
 
             if( rentARideConfig.getLateFee() >= 0 )
-                stmt.setDate( 3, rentARideConfig.getLateFee() );
+                stmt.setInt( 3, rentARideConfig.getLateFee() );
             else
             	throw new RARException( "RentARideParamsManager.save: can't save a RentARideParams: late fee not set or is not persistent" );
             

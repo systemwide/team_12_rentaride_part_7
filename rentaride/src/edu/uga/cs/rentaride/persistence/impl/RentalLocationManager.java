@@ -308,7 +308,7 @@ condition.setLength( 0 );
                 int mileage;
                 String tag;
                 Date lastServiced;
-                String status;
+                VehicleStatus status;
                 String vcondition;
                 int locationId;
                 int typeId;

@@ -81,7 +81,7 @@ public class AdministratorManager {
                 stmt.setNull(7, java.sql.Types.DATE);
             
             if( admin.getUserStatus() != null )
-                stmt.setString( 8, admin.getUserStatus() );
+                stmt.setString( 8, admin.getUserStatus().toString() );
             else
                 stmt.setNull( 8, java.sql.Types.VARCHAR );
             

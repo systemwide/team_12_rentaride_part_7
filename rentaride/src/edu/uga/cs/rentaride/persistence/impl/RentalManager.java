@@ -43,37 +43,37 @@ class RentalManager
                 stmt = (PreparedStatement) conn.prepareStatement( updateRentalSql );
 
             if( rental.getCustomer() != null ) // name is unique unique and non null
-                stmt.setString( 1, rental.getCustomer() );
+                stmt.setString( 1, rental.getCustomer().toString() );
             else 
                 throw new RARException( "RentalManager.save: can't save a Rental: Customer undefined" );
 
             if( rental.getPickupTime() != null )
-                stmt.setDate( 2, rental.getPickupTime()  );
+                stmt.setDate( 2, (java.sql.Date) rental.getPickupTime()  );
             else
             	stmt.setNull(2, java.sql.Types.DATE);
 
             if( rental.getReturnTime() != null )
-                stmt.setDate( 3, rental.getReturnTime()  );
+                stmt.setDate( 3, (java.sql.Date) rental.getReturnTime()  );
             else
             	stmt.setNull(3, java.sql.Types.DATE);
             
             if( rental.getLate() != false )
-                stmt.setString( 4, rental.getLate()  );
+                stmt.setBoolean( 4, rental.getLate()  );
             else
             	throw new RARException( "RentalManager.save: can't save a Rental: late undefined" );
             
             if( rental.getCharges() != 0 )
-                stmt.setString( 5, rental.getCharges()  );
+                stmt.setInt( 5, rental.getCharges()  );
             else
             	throw new RARException( "RentalManager.save: can't save a Rental: charges not set or not persistent" );
            
             if( rental.getVehicle()!= null )
-                stmt.setString( 6, rental.getVehicle().getId()  );
+                stmt.setLong( 6, rental.getVehicle().getId()  );
             else
             	throw new RARException( "RentalManager.save: can't save a Rental: vehicleId undefined" );
             
             if( rental.getReservation()!= null )
-                stmt.setString( 7, rental.getReservation().getId()  );
+                stmt.setLong( 7, rental.getReservation().getId()  );
             else
             	throw new RARException( "RentalManager.save: can't save a Rental: reservationId undefined" );
 

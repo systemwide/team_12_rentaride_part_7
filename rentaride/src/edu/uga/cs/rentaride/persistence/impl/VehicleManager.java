@@ -57,7 +57,7 @@ public class VehicleManager {
             	throw new RARException( "VehicleManager.save: can't save a Vehicle: year undefined" );
         
             if( vehicle.getMileage()!= 0 )
-                stmt.setString( 4, vehicle.getMileage() );
+                stmt.setInt( 4, vehicle.getMileage() );
             else
                 throw new RARException( "VehicleManager.save: can't save a Vehicle: mileage undefined" );
             
@@ -67,27 +67,27 @@ public class VehicleManager {
             	throw new RARException( "VehicleManager.save: can't save a Vehicle: tag undefined" );
             
             if( vehicle.getLastServiced() != null )
-                stmt.setDate( 6, vehicle.getLastServiced() );
+                stmt.setDate( 6, (java.sql.Date) vehicle.getLastServiced() );
             else
             	throw new RARException( "VehicleManager.save: can't save a Vehicle: last serviced undefined" );
 
             if( vehicle.getStatus() != null )
-                stmt.setString( 7, vehicle.getStatus() );
+                stmt.setString( 7, vehicle.getStatus().toString() );
             else
             	throw new RARException( "VehicleManager.save: can't save a Vehicle: status undefined" );
 
             if( vehicle.getCondition() != null )
-                stmt.setString( 8, vehicle.getCondition());
+                stmt.setString( 8, vehicle.getCondition().toString() );
             else
             	throw new RARException( "VehicleManager.save: can't save a Vehicle: condition undefined" );
 
             if( vehicle.getRentalLocation()!= null )
-                stmt.setString( 9, vehicle.getRentalLocation().getId() );
+                stmt.setLong( 9, vehicle.getRentalLocation().getId() );
             else
             	throw new RARException( "VehicleManager.save: can't save a Vehicle: rental location id undefined" );
 
             if( vehicle.getVehicleType()!= null )
-                stmt.setString( 10, vehicle.getVehicleType().getId() );
+                stmt.setLong( 10, vehicle.getVehicleType().getId() );
             else
             	throw new RARException( "VehicleManager.save: can't save a Vehicle: last serviced undefined" );
             
