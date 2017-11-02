@@ -25,6 +25,7 @@ public class CustomerImpl
 	private String		ccNumb;
 	private Date			ccExpDate;
 	private UserStatus	userStatus;
+	private List<Reservation> reservations;
 	
 	public CustomerImpl()
 	{
@@ -135,8 +136,20 @@ public class CustomerImpl
 
 	@Override
 	public List<Reservation> getReservations() {
-
-		return reservation;
+		if (reservations == null)
+		{
+			if(isPersistent())
+			{
+				try {
+					reservations = getPersistenceLayer().restoreCustomerReservation(this);
+				}
+				catch(RARException e)
+				{
+					System.out.println(e);
+				}
+			}
+		}
+		return reservations;
 	}
 
 	@Override

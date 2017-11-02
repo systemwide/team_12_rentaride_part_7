@@ -3,11 +3,13 @@ package edu.uga.cs.rentaride.entity.impl;
 import java.util.List;
 import java.util.Date;
 import edu.uga.cs.rentaride.persistence.*;
+import edu.uga.cs.rentaride.persistence.impl.Persistent;
 import edu.uga.cs.rentaride.RARException;
 import edu.uga.cs.rentaride.entity.*;
 
 public class UserImpl
-	implements User
+	extends Persistent
+	implements User		
 {
 	private long			id;
 	private String		firstName;
