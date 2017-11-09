@@ -111,7 +111,7 @@ public class ReservationManager {
 	                   res.add( nextReservation );
 	               }
 	               
-	               return res;
+	               //return res;
 	           }
 		}
 		catch( Exception e ) {      // just in case...
@@ -121,6 +121,7 @@ public class ReservationManager {
 		throw new RARException( "VehiclesManager.restore: Could not restore persistent Vehicle objects" );
 		
 		}
+		return res;
     } 
     
     public void storeReservation( Reservation reservation ) throws RARException

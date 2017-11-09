@@ -269,7 +269,7 @@ condition.setLength( 0 );
         StringBuffer condition = new StringBuffer( 100 );
         List<Vehicle>   vehicle = new ArrayList<Vehicle>();
     	
-condition.setLength( 0 );
+        condition.setLength( 0 );
         
         // form the query based on the given Rental object instance
         query.append( selectRentalLocationSql );
@@ -309,11 +309,11 @@ condition.setLength( 0 );
                 String tag;
                 Date lastServiced;
                 VehicleStatus status;
-                String vcondition;
-                int locationId;
-                int typeId;
-                Vehicle nextVehicle = null;
-                
+                String cond;
+                VehicleCondition vcondition;
+                long locationId;
+                long typeId;
+                Vehicle nextVehicle = null;                
                 ResultSet rs = stmt.getResultSet();
                 
                 // retrieve the retrieved clubs
@@ -326,11 +326,33 @@ condition.setLength( 0 );
                     mileage = rs.getInt( 5 );
                     tag = rs.getString( 6 );
                     lastServiced = rs.getDate( 7 );
-                    status = rs.getString(8);
-                    vcondition = rs.getString( 9 );
-                    locationId = rs.getInt( 10);
-                    typeId = rs.getInt( 11 );
                     
+                    String stat = rs.getString(8);
+                    if ( stat == "INLOCATION" ) {
+                    		status = VehicleStatus.INLOCATION;
+                    }
+                    else if ( stat == "INRENTAL" )
+                    {
+                    		status = VehicleStatus.INRENTAL;
+                    } 
+                    else {
+                    		throw new RARException("Not a valid status!!");
+                    }
+                    
+                    cond = rs.getString( 9 );
+                    
+                    if(cond == "GOOD") {
+                    		vcondition = VehicleCondition.GOOD;
+                    } else if (stat == "NEEDSMAINTANCE") {
+                    		vcondition = VehicleCondition.NEEDSMAINTENANCE;
+                    } else {
+                    		throw new RARException("Not a valid condition!!");
+                    }
+                    
+                    locationId = rs.getLong( 10);
+                    typeId = rs.getLong( 11 );
+                    
+                    //RentalLocation loc = 
                     
                     nextVehicle = objectLayer.createVehicle(); // create a proxy club object
                     // and now set its retrieved attributes
@@ -342,8 +364,11 @@ condition.setLength( 0 );
                     nextVehicle.setRegistrationTag(tag);
                     nextVehicle.setLastServiced(lastServiced);
                     nextVehicle.setStatus(status);
-                    nextVehicle.setCondition(condition);
+                    nextVehicle.setCondition(vcondition);
                     nextVehicle.setRentalLocation(locationId);
+                    
+                    
+                    
                     nextVehicle.setVehicleType(typeId);
                     
                     // set this to null for the "lazy" association traversal

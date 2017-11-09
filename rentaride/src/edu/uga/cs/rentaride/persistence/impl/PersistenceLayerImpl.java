@@ -44,11 +44,8 @@ public class PersistenceLayerImpl
     		rentalLocationManager = new RentalLocationManager(conn, objLayer);
     		rentalManager = new RentalManager(conn, objLayer);
     		
-    		
-    		
     }
-    
-    
+     
 
 	@Override
 	public List<Administrator> restoreAdministrator(Administrator modelAdministrator) throws RARException {
@@ -252,7 +249,7 @@ public class PersistenceLayerImpl
 		
 		
 		List<Reservation> resList = customer.getReservations();
-		return reservationManager.restoreCustomerReservation(resList);
+		return resList;
 	}
 
 	@Override
@@ -443,7 +440,7 @@ public class PersistenceLayerImpl
 	@Override
 	public List<Vehicle> restoreVehicleVehicleType(VehicleType vehicleType) throws RARException {
 		// TODO Auto-generated method stub
-		return vehicleManager.restoreVehicleType(vehicleType);
+		return vehicleTypeManager.restoreVehicleVehicleType(vehicleType);
 	}
 
 	@Override
