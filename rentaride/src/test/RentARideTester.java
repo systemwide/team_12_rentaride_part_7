@@ -17,13 +17,13 @@ public class RentARideTester {
 		CommentImpl comment1 = null;
 		CommentImpl comment2 = null;
 		
-		Date commentDate = java.sql.Date.valueOf("2017/10/26");
-		Date created = java.sql.Date.valueOf("2017/10/23");
-		Date memberUntil = java.sql.Date.valueOf("2018/10/23");
-		Date dateLastServiced = java.sql.Date.valueOf("2017/10/23");
-		Date ccExp = java.sql.Date.valueOf("2020/12/12");
-		Date pickupTime = java.sql.Date.valueOf("2017/10/26");
-		Date returnTime = java.sql.Date.valueOf("2017/10/26");
+		Date commentDate = java.sql.Date.valueOf("2017-10-26");
+		Date created = java.sql.Date.valueOf("2017-10-23");
+		Date memberUntil = java.sql.Date.valueOf("2018-10-23");
+		Date dateLastServiced = java.sql.Date.valueOf("2017-10-23");
+		Date ccExp = java.sql.Date.valueOf("2020-12-12");
+		Date pickupTime = java.sql.Date.valueOf("2017-10-26");
+		Date returnTime = java.sql.Date.valueOf("2017-10-26");
 		
 		List<HourlyPrice> 	hourlyPriceList = null; //for vehicleTypeImpl
 		List<Vehicle> 		vehicleList = null;
