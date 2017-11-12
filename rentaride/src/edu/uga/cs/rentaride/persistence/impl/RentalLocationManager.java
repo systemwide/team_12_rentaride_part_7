@@ -101,7 +101,7 @@ public class RentalLocationManager {
     public List<RentalLocation> restoreRentalLocation( RentalLocation modelRentalL ) 
             throws RARException
     {
-        String       selectRentalLSql = "select name, address, capacity from club";
+        String       selectRentalLSql = "select name, address, capacity from team12";
         Statement    stmt = null;
         StringBuffer query = new StringBuffer( 100 );
         StringBuffer condition = new StringBuffer( 100 );
@@ -365,11 +365,8 @@ condition.setLength( 0 );
                     nextVehicle.setLastServiced(lastServiced);
                     nextVehicle.setStatus(status);
                     nextVehicle.setCondition(vcondition);
-                    nextVehicle.setRentalLocation(locationId);
-                    
-                    
-                    
-                    nextVehicle.setVehicleType(typeId);
+                    nextVehicle.setRentalLocation(rentalLocation);                    
+                    nextVehicle.setVehicleType(null);
                     
                     // set this to null for the "lazy" association traversal
                     //nextReservation.setPersonFounder( null );
