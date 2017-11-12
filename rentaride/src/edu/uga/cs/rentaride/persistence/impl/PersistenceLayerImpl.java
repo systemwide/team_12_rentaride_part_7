@@ -480,7 +480,7 @@ public class PersistenceLayerImpl
 		// TODO Auto-generated method stub
 		return hourlyPriceManager.restoreVehicleTypeHourlyPrice(hourlyPrice);
 	}
-
+// still need to fix restoreVehicleTypeHourlyPrice....
 	@Override
 	public List<HourlyPrice> restoreVehicleTypeHourlyPrice(VehicleType vehicleType) throws RARException {
 		// TODO Auto-generated method stub
