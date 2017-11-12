@@ -28,12 +28,66 @@ public class login_servlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
-    private boolean isValid(String email, String password)
+    private boolean isValid(String email, String password, Connection con, HttpServletRequest request, HttpServletResponse response, String admin)
     {
+    	String dbEmail = "";
+    	if(admin != null) //use Admin table
+    	{
+    		String query = "SELECT email FROM Administrator WHERE password=\""+password+"\"";
+    		ResultSet rs = DatabaseAccess.retrieve(con, query);
+    		try
+    		{
+    			while (rs.next())
+    			{
+    				dbEmail = rs.getString("email");
+    			}
+    		} catch (SQLException e)
+    		{
+    			e.printStackTrace();
+    		}
+    	}
+    	else //use customer table
+    	{
     		//check email and password against the database
-    		
-
-    		return true; //change to false later
+    	String query = "SELECT email FROM Customer WHERE password=\""+password+"\"";
+		ResultSet rs = DatabaseAccess.retrieve(con, query);
+		try
+		{
+			while (rs.next())
+			{
+				dbEmail = rs.getString("email");
+			}
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		/*
+		String dbPass = "";
+		String query2 = "SELECT password FROM Customer WHERE password=\""+password+"\"";
+		ResultSet rs2 = DatabaseAccess.retrieve(con, query2);
+		try
+		{
+			while (rs.next())
+			{
+				dbPass = rs2.getString("password");
+			}
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}*/
+    	}
+    	System.out.println("Email: " + email);
+		System.out.println("Password: " + password);
+		System.out.println("DBEmail: " + dbEmail);
+		//System.out.println("DBPass: " + dbPass);
+		if(email.equalsIgnoreCase(dbEmail))
+		{
+			return true;
+		}
+		else
+		{
+    			return false;
+		}
     }
 
 	/**
@@ -63,7 +117,7 @@ public class login_servlet extends HttpServlet {
 		
 		if(admin == null) //Customer
 		{
-			if(isValid(email, pass)) //show user login home page
+			if(isValid(email, pass, con, request, response, admin)) //show user login home page
 			{
 				HttpSession session=request.getSession();  
 		        session.setAttribute("email",email); 
@@ -76,7 +130,7 @@ public class login_servlet extends HttpServlet {
 		}
 		else //admin
 		{
-			if(isValid(email, pass)) //show admin login home page
+			if(isValid(email, pass, con, request, response, admin)) //show admin login home page
 			{
 				HttpSession session=request.getSession();  
 		        session.setAttribute("email",email); 
@@ -88,6 +142,14 @@ public class login_servlet extends HttpServlet {
 			}
 		}
 		out.println("</body></html>");
+		try
+		{
+			con.close();
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

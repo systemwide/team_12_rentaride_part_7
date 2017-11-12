@@ -9,7 +9,8 @@ import java.util.Map;
 
 import edu.uga.cs.rentaride.RARException;
 import edu.uga.cs.rentaride.entity.User;
-import edu.uga.cs.rentaride.persistence.impl.DbUtils;
+
+import edu.uga.cs.rentaride.presentation.DatabaseAccess;
 
 public class SessionManager{
     private static Map<String, Session> sessions;
@@ -25,7 +26,7 @@ public class SessionManager{
 	Session s = null;
 
 	try{
-	    conn = DbUtils.connect();
+	    conn = DatabaseAccess.connect();
 	} catch(Exception seq){
 	    throw new RARException("SessionManager.login: Unable to get a database connection");
 	}//try-catch
