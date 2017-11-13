@@ -17,6 +17,7 @@ import edu.uga.cs.rentaride.entity.Vehicle;
 import edu.uga.cs.rentaride.entity.VehicleCondition;
 import edu.uga.cs.rentaride.entity.VehicleStatus;
 import edu.uga.cs.rentaride.entity.VehicleType;
+import edu.uga.cs.rentaride.persistence.PersistenceLayer;
 
 
 
@@ -460,5 +461,7 @@ public interface ObjectLayer
      * @throws RARException in case there was an error while persisting the object
      */
     public void storeRentARideParams( RentARideParams rentARideParams ) throws RARException;
+
+	public void setPersistence(PersistenceLayer persistenceLayer);
 
 }

@@ -564,4 +564,10 @@ public class ObjectLayerImpl implements ObjectLayer {
     	persistence.storeRentARideConfig(rentARideParams);
     }
 
+	@Override
+	public void setPersistence(PersistenceLayer persistenceLayer) {
+		// TODO Auto-generated method stub
+			this.persistence = persistenceLayer;
+	}
+
 }

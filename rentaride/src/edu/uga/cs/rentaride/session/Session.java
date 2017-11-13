@@ -26,7 +26,7 @@ public class Session extends Thread {
 		this.conn = conn;
 		objectLayer = new ObjectLayerImpl();
 		PersistenceLayer persistence = new PersistenceLayerImpl(conn, objectLayer);
-		objectLayer.setPersistence(persistence);
+		objectLayer.  setPersistence(persistence);
 		logicLayer = new LogicLayerImpl(objectLayer);
 		extendExpiration();
 	}//Session
