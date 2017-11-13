@@ -14,6 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.uga.cs.rentaride.RARException;
+import edu.uga.cs.rentaride.entity.impl.CustomerImpl;
+import edu.uga.cs.rentaride.object.ObjectLayer;
+import edu.uga.cs.rentaride.object.impl.ObjectLayerImpl;
+import edu.uga.cs.rentaride.persistence.impl.*;
+
+
 /**
  * Servlet implementation class signup_servlet
  */
@@ -44,12 +51,22 @@ public class signup_servlet extends HttpServlet
 		String ccNumb = "placeholder";
 		String ccExp = "0000-00-00";
 		String status = "active";
-
+		long tempID = -1;
+		CustomerImpl cust = new CustomerImpl( tempID, firstname, lastname, username, email, pass, licenseNo, licenseState, address, createDate, memberUntil, ccNumb, ccExp, status); 
 		String query = "INSERT INTO Customer (firstName, lastName, userName, email, password, licState, licNumber, address, createDate, memberUntil, ccNumb, ccExp, status) "
 				+ "VALUES ('" + firstname + "','" + lastname + "','" + username + "','" + email + "', '" + pass + "', '"
 				+ licenseState + "', '" + licenseNo + "','" + address + "', '" + createDate + "', '" + memberUntil + "', '"+ ccNumb + "', '" + ccExp + "', '"+ status +"');";
 		Statement stmt = null;
-
+		ObjectLayer obj = new ObjectLayerImpl();
+		CustomerManager cm = new CustomerManager(con, obj);
+		try {
+			cm.store(cust);
+		} catch (RARException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		try
 		{
 			stmt = con.createStatement();

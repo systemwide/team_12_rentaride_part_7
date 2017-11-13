@@ -10,14 +10,14 @@ public class FindAllLocationsCtrl{
     private ObjectLayer objectLayer = null;
 
     public FindAllLocationsCtrl(ObjectLayer objectModel){
-	this.objectLayer = objectModel;
+    	this.objectLayer = objectModel;
     }//FindAllLocationsCtrl
 
     public List<RentalLocation> findAllLocations() throws RARException{
-	List<RentalLocation> locations = null;
+    	List<RentalLocation> locations = null;
 
-	locations = objectLayer.findRentalLocation(null);
+    	locations = objectLayer.findRentalLocation(null);
 
-	return locations;
+    	return locations;
     }//findAllLocations
 }//FindAllLocationCtrl

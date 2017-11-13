@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import edu.uga.cs.rentaride.logic.LogicLayer;
+import edu.uga.cs.rentaride.logic.impl.CreateRentalLocCtrl;
 import edu.uga.cs.rentaride.RARException;
 import edu.uga.cs.rentaride.entity.RentalLocation;
 import edu.uga.cs.rentaride.object.ObjectLayer;
@@ -32,4 +33,19 @@ public class LogicLayerImpl implements LogicLayer{
 		FindAllLocationsCtrl ctrlFindAllLocations = new FindAllLocationsCtrl(objectLayer);
 		return ctrlFindAllLocations.findAllLocations();
 	}//findAllLocations
+	
+	public long createRentalLocation(String name, String address, int capacity) throws RARException{
+		CreateRentalLocCtrl ctrlCreateLoc = new CreateRentalLocCtrl(objectLayer);
+		return ctrlCreateLoc.createRentalLocation(name, address, capacity);
+	}
+	
+	public void updateRentalLocation(long id, String name, String address, int capacity) throws RARException {
+		UpdateRentalLocCtrl ctrlUpdateLoc = new UpdateRentalLocCtrl(objectLayer);
+		ctrlUpdateLoc.updateRentalLocation(id, name, address, capacity);
+	}
+	
+	public void deleteRentalLocation(long id, String name, String address, int capacity) throws RARException {
+		DeleteRentalLocCtrl ctrlDeleteLoc = new DeleteRentalLocCtrl(objectLayer);
+		ctrlDeleteLoc.deleteRentalLocation(id, name, address, capacity);
+	}
 }//LogicLayerImpl

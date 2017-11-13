@@ -21,6 +21,7 @@ import edu.uga.cs.rentaride.session.SessionManager;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import javax.servlet.annotation.WebServlet;
 
 
 // doGet starts the execution of the Create Club, selecting from a persons list Use Case
@@ -30,6 +31,7 @@ import freemarker.template.TemplateException;
 //
 // none
 //
+@WebServlet("/CreateLocationLocList")
 public class CreateLocationLocList 
     extends HttpServlet
 {
@@ -83,7 +85,6 @@ public class CreateLocationLocList
         toClient = new BufferedWriter(
                 new OutputStreamWriter( res.getOutputStream(), resultTemplate.getEncoding() )
                 );
-
         res.setContentType("text/html; charset=" + resultTemplate.getEncoding());
         
         httpSession = req.getSession();
