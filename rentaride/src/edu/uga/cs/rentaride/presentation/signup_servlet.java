@@ -3,6 +3,7 @@ package edu.uga.cs.rentaride.presentation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import edu.uga.cs.rentaride.RARException;
+import edu.uga.cs.rentaride.entity.UserStatus;
 import edu.uga.cs.rentaride.entity.impl.CustomerImpl;
 import edu.uga.cs.rentaride.object.ObjectLayer;
 import edu.uga.cs.rentaride.object.impl.ObjectLayerImpl;
@@ -46,13 +48,16 @@ public class signup_servlet extends HttpServlet
 		// if no error return true;
 		// else return false;
 		String address = "543 Second Street, Athens, GA 30605";
-		String createDate = "0000-00-00 00:00:00";
-		String memberUntil = "0000-00-00";
+		Date createDate = java.sql.Date.valueOf("0000-00-00");
+		Date memberUntil = java.sql.Date.valueOf("0000-00-00");
 		String ccNumb = "placeholder";
-		String ccExp = "0000-00-00";
-		String status = "active";
+		Date ccExp = java.sql.Date.valueOf("0000-00-00");
+		UserStatus status;
+		status = UserStatus.ACTIVE;
+		
 		long tempID = -1;
-		CustomerImpl cust = new CustomerImpl( tempID, firstname, lastname, username, email, pass, licenseNo, licenseState, address, createDate, memberUntil, ccNumb, ccExp, status); 
+		
+		CustomerImpl cust = new CustomerImpl( tempID, firstname, lastname, username, email, pass, address, createDate, memberUntil, licenseNo, licenseState, ccNumb, ccExp, status); 
 		String query = "INSERT INTO Customer (firstName, lastName, userName, email, password, licState, licNumber, address, createDate, memberUntil, ccNumb, ccExp, status) "
 				+ "VALUES ('" + firstname + "','" + lastname + "','" + username + "','" + email + "', '" + pass + "', '"
 				+ licenseState + "', '" + licenseNo + "','" + address + "', '" + createDate + "', '" + memberUntil + "', '"+ ccNumb + "', '" + ccExp + "', '"+ status +"');";

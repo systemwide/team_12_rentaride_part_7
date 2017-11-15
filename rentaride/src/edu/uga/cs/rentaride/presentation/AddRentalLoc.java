@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import edu.uga.cs.rentaride.RARException;
 import edu.uga.cs.rentaride.entity.RentalLocation;
 import edu.uga.cs.rentaride.logic.LogicLayer;
+import edu.uga.cs.rentaride.object.ObjectLayer;
 import edu.uga.cs.rentaride.session.Session;
 import edu.uga.cs.rentaride.session.SessionManager;
 import freemarker.template.Configuration;
@@ -103,6 +104,7 @@ public class AddRentalLoc extends HttpServlet {
             return; 
         }
         
+        ObjectLayer obj = session.getObjectLayer();
         logicLayer = session.getLogicLayer();
         if( logicLayer == null ) {
             new RARException("Session expired or illegal; please log in" );

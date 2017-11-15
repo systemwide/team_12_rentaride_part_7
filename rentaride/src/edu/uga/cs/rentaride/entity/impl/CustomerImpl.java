@@ -46,7 +46,7 @@ public class CustomerImpl
 		this.userStatus = 	null;
 	}
 	
-	public CustomerImpl(int id, String firstName, String lastName, String userName, String password,
+	public CustomerImpl(long id, String firstName, String lastName, String userName, String password,
 			String email, String address, Date createDate, Date memberUntil, String licenseState, 
 			String licenseNumb, String ccNumb, Date ccExpDate, UserStatus userStatus)
 	{
