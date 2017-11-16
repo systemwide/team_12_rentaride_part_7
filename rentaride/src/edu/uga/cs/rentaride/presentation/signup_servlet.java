@@ -72,20 +72,20 @@ public class signup_servlet extends HttpServlet
 		}
 		
 		
-		try
-		{
-			stmt = con.createStatement();
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			stmt.executeUpdate(query);
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
+//		try
+//		{
+//			stmt = con.createStatement();
+//		} catch (SQLException e)
+//		{
+//			e.printStackTrace();
+//		}
+//		try
+//		{
+//			stmt.executeUpdate(query);
+//		} catch (SQLException e)
+//		{
+//			e.printStackTrace();
+//		}
 		System.out.println("Inserted " + firstname + " Into Customer Table");
 		return true;
 	}
