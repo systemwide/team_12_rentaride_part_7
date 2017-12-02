@@ -15,8 +15,8 @@ import edu.uga.cs.rentaride.entity.*;
 
 public class RentalLocationManager {
 
-	private ObjectLayer objectLayer = null;
-    private Connection   conn = null;
+	private static ObjectLayer objectLayer = null;
+    private static Connection   conn = null;
     
     public RentalLocationManager( Connection conn, ObjectLayer objectLayer )
     {
@@ -98,7 +98,7 @@ public class RentalLocationManager {
          }
      }
     
-    public List<RentalLocation> restoreRentalLocation( RentalLocation modelRentalL ) 
+    public static List<RentalLocation> restoreRentalLocation( RentalLocation modelRentalL ) 
             throws RARException
     {
         String       selectRentalLSql = "select name, address, capacity from team12";

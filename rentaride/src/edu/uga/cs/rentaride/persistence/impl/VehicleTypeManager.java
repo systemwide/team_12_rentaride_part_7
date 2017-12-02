@@ -15,8 +15,8 @@ import edu.uga.cs.rentaride.entity.*;
 
 public class VehicleTypeManager {
 
-	private ObjectLayer objectLayer = null;
-    private Connection   conn = null;
+	private static ObjectLayer objectLayer = null;
+    private static Connection   conn = null;
     
     public VehicleTypeManager( Connection conn, ObjectLayer objectLayer )
     {
@@ -83,7 +83,7 @@ public class VehicleTypeManager {
         }
     }
 	
-	public List<VehicleType> restoreVehicleType( VehicleType modelVehicleType ) throws RARException
+	public static List<VehicleType> restoreVehicleType( VehicleType modelVehicleType ) throws RARException
 	{
 		String       selectVehicleSql = "select id and name from vehicle type";
 		Statement    stmt = null;

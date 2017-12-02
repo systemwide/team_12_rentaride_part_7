@@ -1,4 +1,8 @@
 <!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -19,9 +23,10 @@
 
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
-<body>
-
-
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -31,7 +36,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Rent-A-Ride</a>
+          <a class="navbar-brand" href="index.html">Rent-A-Ride</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form">
@@ -56,7 +61,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="CreateLocationLocList">Manage Locations</a></li>
+            <li><a href="admin_location.html">Manage Locations</a></li>
             <li><a href="admin_vehicle.html">Manage Vehicles</a></li>
             <li><a href="admin_user_mgmt.html">Manage Users</a></li>
             <li><a href="admin_reservations.html">Manage Reservations</a></li>
@@ -64,7 +69,7 @@
           <ul class="nav nav-sidebar">
             <li><a href="admin_create_type.html">Manage Vehicle Types</a></li>
             <li><a href="admin_fees.html">Manage Fees</a></li>
-            <li><a href="UserComments">Browse User Comments</a></li>
+            <li><a href="">One more nav</a></li>
             <li><a href="">Another nav item</a></li>
             <li><a href="">More navigation</a></li>
           </ul>
@@ -73,24 +78,20 @@
             <li><a href="">One more nav</a></li>
             <li><a href="">Another nav item</a></li>
           </ul>
-        </div> <!--end sidenav -->
-
+        </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Manage Rental Locations</h1>
+          <h1 class="page-header">Manage Fleet</h1>
 
-          <div class="row placeholders">
+          <div class="row placeholders"> 
           <div class="col-sm-6">
-            <form id="createLocation" method="post" action="AddRentalLocation">
+            <form id="createVehicle" method="GET" action="CreateVehicle">
             <fieldset>
-            <legend>Create New Location</legend>
-            <p><label class="field" for="locName">Location Name:</label><input class="textbox-200" type="text" placeholder="Name" id="locName" name="locName"></p>
-            <p><label class="field" for="locAddress">Location Address:</label><input class="textbox-200" type="text" placeholder="Address" id="locAddress" name="locAddress"></p>
-           <!-- <p><label class="field" for="locCoord">Coordinates:</label><input class="textbox-200" type="text" placeholder="Coordinates" id="locCoord" name="locCoord"></p>-->
-            <p><label class="field" for="locCapacity">Location Capacity:</label><input class="textbox-200" type="text" placeholder="Capacity" id="locCapacity" name="locCapacity"></p>
-            <!--<p><label class="field" for="addVehicle">Add Vehicle (by VIN):</label><input class="textbox-200" type="text" placeholder="New Vehicle VIN" id="addVehicle"></p>-->
-            <!--<p><label class="field" for="removeVehicle">Remove Vehicle (by VIN):</label><input class="textbox-200" type="text" placeholder="Removed Vehicle VIN" id="remVehicle"></p>-->
+            <legend>Create New Vehicle</legend>
+            
+            <h2> SUCCESS!! </h2>
+            
             </fieldset>
-            <p><input type="submit" class="submit" id="vehicleCreator" value="Submit" title="Submit this form and create this location"></p>
+            <p><input type="submit" class="submit" id="vehicleCreator" value="Submit" title="Submit this form and create this vehicle"></p>
 
             </form>
           </div>
@@ -100,18 +101,7 @@
           </div><!-- end row-->
 
           <h2 class="sub-header">Your Rental Locations</h2>
-	  <form method="POST" action="ManageRentalLoc">
-	    <table id="rentLoc">
-	      <thead>
-		<tr><th>Location Name</th><th>Address</th><th>Capacity</th><th>Actions</th></tr>
-	      </thead>
-	      <tbody>
-		<#list locations as location>
-		  <tr><td><input type="text" value="${location[1]}" id="editLocName" name="editLocName${location[0]}"></td><td><input type="text" value="${location[2]}" id="editLocAddress" name="editLocAddress${location[0]}"></td><td><input type="text" value="${location[3]}" id="editLocCap" name="editLocCap${location[0]}"></td><td><button name="updateLoc" value="${location[0]}" type="submit">Update</button><button name="deleteLoc" value="${location[0]}" type="submit">Delete</button></tr>
-		</#list>
-	      </tbody>
-	    </table>
-	  </form>
+          <div id="map"></div>
       <hr>
 
       <footer>
@@ -125,7 +115,7 @@
         <script src="js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-<!--        <script>
+        <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
             e=o.createElement(i);r=o.getElementsByTagName(i)[0];
@@ -134,7 +124,7 @@
             ga('create','UA-XXXXX-X','auto');ga('send','pageview');
         </script>
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKzopAw5azXvb6Y64q5AlReWlDGvce3Kc&callback=myMap"></script>-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKzopAw5azXvb6Y64q5AlReWlDGvce3Kc&callback=myMap"></script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
