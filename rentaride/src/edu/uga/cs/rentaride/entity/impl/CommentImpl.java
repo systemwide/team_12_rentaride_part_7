@@ -9,15 +9,15 @@ import edu.uga.cs.rentaride.entity.Rental;
 import edu.uga.cs.rentaride.persistence.impl.PersistableImpl;
 
 public class CommentImpl
-	extends PersistableImpl
-	implements Comment
+extends PersistableImpl
+implements Comment
 {
 	private long			id;
 	private String		text;
 	private Date			date;
 	private Customer		customer;
 	private Rental		rental;
-	
+
 	public CommentImpl()
 	{
 		this.id = -1;
@@ -26,7 +26,7 @@ public class CommentImpl
 		this.customer = null;
 		this.rental = null;		
 	}// end Constructor 1
-	
+
 	public CommentImpl(long id, String text, Date date, Customer customer, Rental rental)
 	{
 		this.id = id;
@@ -35,8 +35,8 @@ public class CommentImpl
 		this.customer = customer;
 		this.rental = rental;
 	}// end constructor 2
-	
-	
+
+
 	@Override
 	public long getId() {
 
@@ -51,7 +51,7 @@ public class CommentImpl
 
 	@Override
 	public boolean isPersistent() {
-		
+
 		return id != -1;
 	}
 
@@ -102,5 +102,5 @@ public class CommentImpl
 		// TODO Auto-generated method stub
 		this.customer = customer;
 	}
-	
+
 }// end CommentImpl class

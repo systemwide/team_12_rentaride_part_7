@@ -9,6 +9,7 @@ import edu.uga.cs.rentaride.logic.impl.CreateRentalLocCtrl;
 import edu.uga.cs.rentaride.RARException;
 import edu.uga.cs.rentaride.entity.Customer;
 import edu.uga.cs.rentaride.entity.RentalLocation;
+import edu.uga.cs.rentaride.entity.Reservation;
 import edu.uga.cs.rentaride.entity.VehicleCondition;
 import edu.uga.cs.rentaride.entity.VehicleStatus;
 import edu.uga.cs.rentaride.entity.VehicleType;
@@ -66,8 +67,37 @@ public class LogicLayerImpl implements LogicLayer{
 	@Override
 	public List<Customer> browseCustomers() {
 		BrowseCustomerCtrl browseCustCtrl = new BrowseCustomerCtrl(objectLayer);
-		return browseCustCtrl.ViewCustomerInfo();
+		try {
+			return browseCustCtrl.ViewCustomerInfo();
+		} catch (RARException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return null;
 	}
+
+	@Override
+	public List<Reservation> findAllReservations(int id) {
+		FindAllReservationsCtrl ctrlFindAllReservations = new FindAllReservationsCtrl( objectLayer );
+		try {
+			return ctrlFindAllReservations.findAllReservations(id);
+		} catch (RARException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}// ebd findAllReservations
+
+	@Override
+	public List<Reservation> findAllReservations() {
+		FindAllReservationsCtrl ctrlFindAllReservations = new FindAllReservationsCtrl( objectLayer );
+		try {
+			return ctrlFindAllReservations.findAllReservations();
+		} catch (RARException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}// end findAllReservations
 }//LogicLayerImpl

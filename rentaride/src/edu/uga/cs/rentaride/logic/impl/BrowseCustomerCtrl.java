@@ -18,7 +18,7 @@ public class BrowseCustomerCtrl {
 		
 	}
 	
-	public List<Customer> ViewCustomerInfo(String username)
+	public List<Customer> ViewCustomerInfo()
             throws RARException
     {
         List<Customer> 	    customers  = null;

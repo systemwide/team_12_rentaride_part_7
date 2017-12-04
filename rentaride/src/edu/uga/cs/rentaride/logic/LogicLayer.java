@@ -6,6 +6,7 @@ import java.util.List;
 import edu.uga.cs.rentaride.RARException;
 import edu.uga.cs.rentaride.entity.Customer;
 import edu.uga.cs.rentaride.entity.RentalLocation;
+import edu.uga.cs.rentaride.entity.Reservation;
 import edu.uga.cs.rentaride.entity.VehicleCondition;
 import edu.uga.cs.rentaride.entity.VehicleStatus;
 import edu.uga.cs.rentaride.entity.VehicleType;
@@ -19,5 +20,8 @@ public interface LogicLayer{
 			Date lastServiced, VehicleStatus status, VehicleCondition condition, RentalLocation rentalLocation,
 			VehicleType vehicleType) throws RARException;
 	public List<Customer> browseCustomers();
+	public List<Reservation> findAllReservations(int id);
+	public List<Reservation> findAllReservations();
+	
 	
 }//LogicLayer

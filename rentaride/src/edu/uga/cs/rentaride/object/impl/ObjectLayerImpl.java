@@ -141,6 +141,7 @@ public class ObjectLayerImpl implements ObjectLayer {
     	return persistence.restoreCustomer(modelCustomer);
     }
     
+    
     /**
      * Store a given Customer object in persistent data store.
      * @param customer the object to be persisted

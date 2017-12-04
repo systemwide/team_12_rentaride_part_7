@@ -133,14 +133,24 @@
                 <th>Status</th>
 
               </tr>
-             
+			
              <#list customers as customer>
-             <tr><td>${customer[1]}</td>
-              <td>${customer[2]}</td>
-              <td>${customer[3]}</td>
-              <td>${customer[4]}</td>
-              <td>${customer[5]}</td>
-            </tr>
+             <tr>
+              <tr>
+			    <td>${customer[0]}</td>
+			    <td>${customer[1]}</td>
+			    <td>${customer[2]}</td>
+			    <td>${customer[3]}</td>
+			    <td>${customer[4]}</td>
+			    <td>${customer[5]}</td>
+			    <td>${customer[6]}</td>
+			    <td>${customer[7]}</td>
+			    <td>${customer[8]}</td>
+			    <td>${customer[9]}</td>
+			    <td>${customer[10]}</td>
+			    <td>${customer[11]}</td>
+			    <td>${customer[12]}</td>
+			  </tr>
             </#list>
               </table>
           </div>
