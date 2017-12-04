@@ -107,47 +107,25 @@
           </div>
           </div><!-- end row-->
 
-          <h2 class="sub-header">Active Users</h2>
-          <div id="userTable">
-            <table>
-              
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>UserName</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Created On</th>
-                <th>Member Until</th>
-                <th>Created On</th>
-                <th>License State</th>
-                <th>License Number</th>
-                <th>Credit Card Expires</th>
-                <th>Status</th>
-
-              </tr>
-             
-             <#list customers as customer>
-             <tr>
-               <tr>
-                <td>${customer[0]}</td>
-                <td>${customer[1]}</td>
-                <td>${customer[2]}</td>
-                <td>${customer[3]}</td>
-                <td>${customer[4]}</td>
-                <td>${customer[5]}</td>
-                <td>${customer[6]}</td>
-                <td>${customer[7]}</td>
-                <td>${customer[8]}</td>
-                <td>${customer[9]}</td>
-                <td>${customer[10]}</td>
-                <td>${customer[11]}</td>
-                <td>${customer[12]}</td>
-              </tr>
-              
-            </tr>
-            </#list>
-              </table>
+          <h2 class="sub-header">Rental Locations</h2>
+          <div id="locTable">
+           <table>
+           <thead>
+                              
+                <tr>
+                  <td><b>Name</b></td>
+                  <td><b>Address</b></td>
+                  <td><b>Capacity</b></td>
+                </tr>
+               <#list rentalLocations as rentalLocation>
+                <tr>
+                  <td>${rentalLocation[0]}</td>
+                  <td>${rentalLocation[1]}</td>
+                  <td>${rentalLocation[2]}</td>
+                </tr>
+               </#list>
+            </tbody>
+            </table>
           </div>
       <hr>
 

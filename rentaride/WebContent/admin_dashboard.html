@@ -70,85 +70,32 @@
             <li><a href="admin_create_type.html">Manage Vehicle Types</a></li>
             <li><a href="admin_fees.html">Manage Fees</a></li>
             </ul>
-        </div> <!--end sidenav -->
-
+        </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Manage Users</h1>
+          <h1 class="page-header">Manage Fleet - Administrator Dashboard</h1>
 
-          <div class="row placeholders">
+          <div class="row placeholders"> 
           <div class="col-sm-6">
-            <form id="createLocation">
-            <fieldset>
-            <legend>Create Or Edit Users</legend>
-            <p><label class="field" for="name">Name:</label><input class="textbox-200" type="text" placeholder="Name" id="name"></p>
-            <p><label class="field" for="locAddress">User Name:</label><input class="textbox-200" type="text" placeholder="Username" id="username"></p>
-            <p><label class="field" for="address">User Address:</label><input class="textbox-200" type="text" placeholder="Address" id="locCoord"></p>
-            <p><label class="field" for="email">User Email:</label><input class="textbox-200" type="text" placeholder="Email" id="email"></p>
-            <p><label class="field" for="phone">User Phone:</label><input class="textbox-200" type="text" placeholder="706-555-5555" id="phoneNo"></p>
-            <p><label class="field" for="driverLicense">User License#:</label><input class="textbox-200" type="text" placeholder="License Number" id="lienseNo"></p>
-            
-            </fieldset>
-            <p><input type="submit" class="submit" id="vehicleCreator" value="Submit" title="Submit this form and create this location"></p>
+            <h3>Fleet Overviews</h3>
+          <button type="submit"  class="button" id="browseCustomers" method="GET" action="BrowseCustomers">Customer Overview</button><br>
+          <button type="submit" class="button" id="browseLocations" method="GET" action="BrowseRentalLocations">Location Overview</button><br>
+          <button type="submit" class="button" id="browseVehicles" method="GET" action="BrowseVehicles">Vehicle Overview</button><br>
+          <button type="submit" class="button" id="browseReservations" method="GET" action="BrowseReservations">Reservation Overview</button><br>
+          <button type="submit" class="button" id="browseComments" method="GET" action="BrowseComments">Comments Overview</button><br>
 
-            </form>
           </div>
           <div class="col-sm-6">
-            <form id="createLocation">
-            <fieldset>
-            <legend>Admin Functions</legend>
-              <p><label class="field" for="driverLicense">User License#:</label><input class="textbox-200" type="text" placeholder="License Number" id="lienseNo"></p>
-              <p><button type="submit" class="btn btn-success" id="logOut">View User Comments</button></p>
-              <p><button type="submit" class="btn btn-success" id="logOut">Edit User Fees</button></p>
-              <p><button style="background-color: red" type="submit" class="btn btn-success" id="logOut">**Suspend Membership**</button></p>
-            </fieldset>
-            </form>
-
-
+            <h3>Manage Entities</h3>
+          <button type="submit"  class="button" id="manageCustomer" method="GET" action="ManageCustomer">Manage Customer</button><br>
+          <button type="submit" class="button" id="manageLocation" method="GET" action="ManageLocation">Manage Location</button><br>
+          <button type="submit" class="button" id="manageVehicle" method="GET" action="ManageVehicle">Manage Vehicle</button><br>
+          <button type="submit" class="button" id="manageFees" method="GET" action="ManageFees">Manage Fees</button><br>
+          
           </div>
           </div><!-- end row-->
 
-          <h2 class="sub-header">Active Users</h2>
-          <div id="userTable">
-            <table>
-              
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>UserName</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Created On</th>
-                <th>Member Until</th>
-                <th>Created On</th>
-                <th>License State</th>
-                <th>License Number</th>
-                <th>Credit Card Expires</th>
-                <th>Status</th>
-
-              </tr>
-             
-             <#list customers as customer>
-             <tr>
-               <tr>
-                <td>${customer[0]}</td>
-                <td>${customer[1]}</td>
-                <td>${customer[2]}</td>
-                <td>${customer[3]}</td>
-                <td>${customer[4]}</td>
-                <td>${customer[5]}</td>
-                <td>${customer[6]}</td>
-                <td>${customer[7]}</td>
-                <td>${customer[8]}</td>
-                <td>${customer[9]}</td>
-                <td>${customer[10]}</td>
-                <td>${customer[11]}</td>
-                <td>${customer[12]}</td>
-              </tr>
-              
-            </tr>
-            </#list>
-              </table>
-          </div>
+          
+          <div id="map"></div>
       <hr>
 
       <footer>

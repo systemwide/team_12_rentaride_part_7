@@ -60,7 +60,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="admin_dashboard.html">Dashboard<span class="sr-only">(current)</span></a></li>
             <li><a href="admin_location.html">Manage Locations</a></li>
             <li><a href="admin_vehicle.html">Manage Vehicles</a></li>
             <li><a href="admin_user_mgmt.html">Manage Users</a></li>
@@ -69,37 +69,84 @@
           <ul class="nav nav-sidebar">
             <li><a href="admin_create_type.html">Manage Vehicle Types</a></li>
             <li><a href="admin_fees.html">Manage Fees</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-            <li><a href="">More navigation</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-          </ul>
+            </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Manage Fleet</h1>
 
-          <div class="row placeholders">
+          <div class="row placeholders"> 
           <div class="col-sm-6">
-            <form id="createVehicle">
+            <form id="createVehicle" method="GET" action="CreateVehicle">
             <fieldset>
             <legend>Create New Vehicle</legend>
-            <p><label class="field" for="type">Vehicle Type:</label><input class="textbox-200" type="text" placeholder="Type" id="vin"></p>
-            <p><label class="field" for="VIN">VIN:</label><input class="textbox-200" type="text" placeholder="VIN" id="vin"></p>
-            <p><label class="field" for="Year">Vehicle Year:</label><input class="textbox-200" type="text" placeholder="Year" id="vehicleYear"></p>
-            <p><label class="field" for="Make">Vehicle Make:</label><input class="textbox-200" type="text" placeholder="Make" id="vehicleMake"></p>
-            <p><label class="field" for="Model">Vehicle Model:</label><input class="textbox-200" type="text" placeholder="Model" id="vehicleModel"></p>
             
+            <p><label class="field" for="Make">Vehicle Make:</label><input class="textbox-200" type="text" placeholder="Make" id="vehicleMake" name="vehicleMake"></p>
+            
+            <p><label class="field" for="Year">Vehicle Year:</label><input class="textbox-200" type="text" placeholder="Year" id="vehicleYear" name="vehicleYear"></p>
+            
+            <p><label class="field" for="Model">Vehicle Model:</label><input class="textbox-200" type="text" placeholder="Model" id="vehicleModel" name="vehicleModel"></p>
+            
+            <p><label class="field" for="Mileage">Vehicle Mileage:</label><input class="textbox-200" type="text" placeholder="Mileage" id="mileage" name="mileage"></p>
+            
+            <p><label class="field" for="Tag">Licence Tag:</label><input class="textbox-200" type="text" placeholder="Tag" id="registrationTag" name="registrationTag"></p>
+            
+            <p><label class="field" for="LastServiced">Last Serviced:</label><input class="textbox-200" type="date" d="lastServiced" name="lastServiced"></p>
+
+            <p><label class="field" for="Tag">Location:</label><input class="textbox-200" type="text" placeholder="Location" id="location" name="location"></p>
+
+            <p><label class="field" for="type">Vehicle Type:</label><input class="textbox-200" type="text" placeholder="Type" id="type" name="type"></p>
+             
+             <p><label class="field" for="Status">Status</label>
+             <select name="status" id="status" class="textbox-200">
+              <option value="INLOCATION">INLOCATION</option>
+              <option value="INRETAL">INRENTAL</option>
+            </select>
+
+            <p><label class="field" for="Condition">Condition</label>
+             <select name="condition" id="condition" class="textbox-200">
+              <option value="GOOD">GOOD</option>
+              <option value="NEEDSMAINTENANCE">NEEDSMAINTENANCE</option>
+            </select>
             </fieldset>
             <p><input type="submit" class="submit" id="vehicleCreator" value="Submit" title="Submit this form and create this vehicle"></p>
 
             </form>
           </div>
-          <div class="col-sm-6">
-          <img src="img/prius.jpeg" class="img-responsive" alt="prius">
+          <div class="col-sm-6"> <form id="createVehicle" method="GET" action="EditVehicle">
+            <fieldset>
+            <legend>Manage An Existing Vehicle</legend>
+            
+            <p><label class="field" for="Make">Vehicle Make:</label><input class="textbox-200" type="text" placeholder="Make" id="vehicleMake" name="vehicleMake"></p>
+            
+            <p><label class="field" for="Year">Vehicle Year:</label><input class="textbox-200" type="text" placeholder="Year" id="vehicleYear" name="vehicleYear"></p>
+            
+            <p><label class="field" for="Model">Vehicle Model:</label><input class="textbox-200" type="text" placeholder="Model" id="vehicleModel" name="vehicleModel"></p>
+            
+            <p><label class="field" for="Mileage">Vehicle Mileage:</label><input class="textbox-200" type="text" placeholder="Mileage" id="mileage" name="mileage"></p>
+            
+            <p><label class="field" for="Tag">Licence Tag:</label><input class="textbox-200" type="text" placeholder="Tag" id="registrationTag" name="registrationTag"></p>
+            
+            <p><label class="field" for="LastServiced">Last Serviced:</label><input class="textbox-200" type="date" d="lastServiced" name="lastServiced"></p>
+
+            <p><label class="field" for="Tag">Location:</label><input class="textbox-200" type="text" placeholder="Location" id="location" name="location"></p>
+
+            <p><label class="field" for="type">Vehicle Type:</label><input class="textbox-200" type="text" placeholder="Type" id="type" name="type"></p>
+             
+             <p><label class="field" for="Status">Status</label>
+             <select name="status" id="status" class="textbox-200">
+              <option value="INLOCATION">INLOCATION</option>
+              <option value="INRETAL">INRENTAL</option>
+            </select>
+
+            <p><label class="field" for="Condition">Condition</label>
+             <select name="condition" id="condition" class="textbox-200">
+              <option value="GOOD">GOOD</option>
+              <option value="NEEDSMAINTENANCE">NEEDSMAINTENANCE</option>
+            </select>
+            </fieldset>
+            <p><input type="submit" class="submit" id="vehicleEditor" value="Submit" title="Submit this form and create this vehicle"></p>
+
+            </form>
           </div>
           </div><!-- end row-->
 
