@@ -10,6 +10,7 @@ import edu.uga.cs.rentaride.entity.Reservation;
 import edu.uga.cs.rentaride.entity.VehicleCondition;
 import edu.uga.cs.rentaride.entity.VehicleStatus;
 import edu.uga.cs.rentaride.entity.VehicleType;
+import edu.uga.cs.rentaride.session.Session;
 
 public interface LogicLayer{
     public List<RentalLocation> findAllLocations() throws RARException;
@@ -22,6 +23,8 @@ public interface LogicLayer{
 	public List<Customer> browseCustomers();
 	public List<Reservation> findAllReservations(int id);
 	public List<Reservation> findAllReservations();
+	public String login(Session session, String username, String password);
+	public void logout(String ssid);
 	
 	
 }//LogicLayer

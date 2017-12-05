@@ -100,4 +100,16 @@ public class LogicLayerImpl implements LogicLayer{
 		}
 		return null;
 	}// end findAllReservations
+
+	@Override
+	public String login(Session session, String username, String password) {
+		LoginCtrl ctrlVerifyUser = new LoginCtrl(objectLayer);
+		try {
+			return ctrlVerifyUser.login(session, username, password);
+		} catch (RARException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}// end login
 }//LogicLayerImpl
